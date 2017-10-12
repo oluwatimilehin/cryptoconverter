@@ -1,9 +1,10 @@
 package com.oluwatimilehin.cryptoconverter
 
 import com.google.gson.Gson
-import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
+import com.google.gson.reflect.TypeToken
 import org.junit.Assert.assertTrue
 import org.junit.Test
+
 
 /**
  * Created by Oluwatimilehin on 12/10/2017.
@@ -13,19 +14,18 @@ class GSONMappingTests {
     @Test
     fun gsonMapping(){
         val jsonString : String = "{\n" +
-                "\"ETH\": {\n" +
-                "\"USD\": 1.13,\n" +
-                "\"EUR\": 1.04,\n" +
-                "\"NGN\": 290.85,\n" +
-                "\"CAD\": 1.63,\n" +
-                "\"AUD\": 1.6,\n" +
-                "\"JPY\": 133.43\n" +
-                "}\n" +
-                "}";
+                "\"USD\": 306.96,\n" +
+                "\"EUR\": 257.05,\n" +
+                "\"NGN\": 107670.08,\n" +
+                "\"CAD\": 385.06,\n" +
+                "\"AUD\": 394.85,\n" +
+                "\"JPY\": 34692.37,\n" +
+                "\"TRY\": 1212.31\n" +
+                "}"
 
-        val gson: Gson = Gson()
-        val eth: ExchangeRate? = gson.fromJson(jsonString, ExchangeRate::class.java)
+        val type = object : TypeToken<HashMap<String, String>>(){}.type;
+        val map: HashMap<String, String> = Gson().fromJson(jsonString, type);
 
-        assertTrue(eth?.ethRates?.size == 6);
+        assertTrue(map.size == 7);
     }
 }
