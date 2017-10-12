@@ -44,4 +44,5 @@ dependencies {
     //Add material values to app.
     compile 'blue.aodev:material-values:1.1.1'
 
+    compile 'com.github.midorikocak:currency-picker-android:1.1.9'
 }
