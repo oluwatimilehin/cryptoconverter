@@ -1,7 +1,7 @@
 package com.oluwatimilehin.cryptoconverter
 
 import com.google.gson.Gson
-import com.oluwatimilehin.cryptoconverter.data.ETHExchangeRate
+import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -24,8 +24,8 @@ class GSONMappingTests {
                 "}";
 
         val gson: Gson = Gson()
-        val eth: ETHExchangeRate? = gson.fromJson(jsonString, ETHExchangeRate::class.java)
+        val eth: ExchangeRate? = gson.fromJson(jsonString, ExchangeRate::class.java)
 
-        assertTrue(eth?.exchangeRates?.size == 6);
+        assertTrue(eth?.ethRates?.size == 6);
     }
 }
