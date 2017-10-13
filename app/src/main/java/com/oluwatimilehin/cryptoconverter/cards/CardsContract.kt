@@ -1,25 +1,25 @@
 package com.oluwatimilehin.cryptoconverter.cards;
 
-import com.oluwatimilehin.cryptoconverter.data.Card;
-
-import java.util.List;
+import com.oluwatimilehin.cryptoconverter.data.Card
 
 /**
  * Created by Oluwatimilehin on 13/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
 
-public interface CardsContract {
+interface CardsContract {
 
-    public interface View{
-        void showProgressIndicator();
-        void hideProgressIndicator();
-        void updateRecyclerView(List<Card> cards);
+    interface View{
+        fun showProgressIndicator()
+        fun hideProgressIndicator()
+        fun updateRecyclerView(cards: kotlin.collections.List<Card>)
     }
 
-    public interface Presenter{
-        void loadDataFromApi();
-        void saveDataInDb();
-        void loadDataFromDb();
+    interface Presenter{
+        fun loadDataFromApi()
+        fun saveDataInDb()
+        fun loadDataFromDb()
+        fun attachView(view: CardsContract.View)
+        fun onDestroy()
     }
 }
