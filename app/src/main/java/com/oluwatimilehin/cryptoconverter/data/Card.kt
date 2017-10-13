@@ -13,7 +13,7 @@ import android.arch.persistence.room.PrimaryKey
                 unique = true)
                 )
         )
-class Card(val cardName: String, val from: String, val to: String, double: Double){
+class Card(val cardName: String, val from: String, val to: String, val amount: Double){
     @PrimaryKey(autoGenerate = true)
     val uid: Long = 0;
 }
