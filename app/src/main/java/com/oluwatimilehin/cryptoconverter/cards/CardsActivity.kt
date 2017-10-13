@@ -27,4 +27,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsPresenter = CardsPresenter()
         cardsPresenter.attachView(this)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cardsPresenter.onDestroy()
+    }
 }

@@ -1,15 +1,14 @@
 package com.oluwatimilehin.cryptoconverter.data
 
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Update
+import android.arch.persistence.room.*
 import io.reactivex.Flowable
 
 /**
  * Created by Oluwatimilehin on 12/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
+
+@Dao
 interface CurrencyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllCurrencies(currencies: List<Currency>)
