@@ -1,9 +1,10 @@
-package com.oluwatimilehin.cryptoconverter
+package com.oluwatimilehin.cryptoconverter.cards
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.oluwatimilehin.cryptoconverter.R
 
-class MainActivity : AppCompatActivity() {
+class CardsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
