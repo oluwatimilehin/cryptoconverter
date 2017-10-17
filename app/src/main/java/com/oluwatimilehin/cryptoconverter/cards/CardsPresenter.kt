@@ -33,6 +33,7 @@ class CardsPresenter : CardsContract.Presenter {
 
     override fun loadDataFromApi() {
         val currencies = arrayOf(ExtendedCurrency.CURRENCIES)
+
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
         val countries: String = TextUtils.join(",", currencies)
 
@@ -57,7 +58,7 @@ class CardsPresenter : CardsContract.Presenter {
                         App.database?.currencyDao()?.insertAllCurrencies(values)
                     }
                 }
-                .doOnError { e ->  }
+                .doOnError { e -> e.printStackTrace()}
                 .subscribe();
 
         disposables.add(apiCall)
@@ -68,7 +69,7 @@ class CardsPresenter : CardsContract.Presenter {
 
         for (key in map.keys) {
             val amount: Double? = map.get(key)
-            list.add(Currency(from, key, amount!!))
+            list.add(Currency(0, from, key, amount!!))
         }
 
         return list;
