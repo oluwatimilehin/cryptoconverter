@@ -52,13 +52,12 @@ class CardsPresenter : CardsContract.Presenter {
         val apiCall: Disposable = Observable.concat(ethRates, btcRates)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    values: List<Currency> ->
+                .doOnNext { values: List<Currency> ->
                     run {
                         App.database?.currencyDao()?.insertAllCurrencies(values)
                     }
                 }
-                .doOnError { e -> e.printStackTrace()}
+                .doOnError { e -> e.printStackTrace() }
                 .subscribe();
 
         disposables.add(apiCall)
