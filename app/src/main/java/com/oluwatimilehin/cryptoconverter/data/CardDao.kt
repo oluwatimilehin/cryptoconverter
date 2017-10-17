@@ -18,7 +18,7 @@ interface CardDao {
     @Query("SELECT * from cards")
     fun getAllCards(): Flowable<List<Card>>
 
-    @Query("UPDATE cards SET amount = :newAmount WHERE from = :from AND to = :to")
+    @Query("UPDATE cards SET amount = :newAmount WHERE 'from' = :from AND 'to' = :to")
     fun updateAmount(newAmount: Double, from: String, to: String);
 
     @Query("DELETE from cards")

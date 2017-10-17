@@ -16,7 +16,7 @@ interface CurrencyDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateAmounts(currencies: List<Currency>)
 
-    @Query("SELECT amount from currencies WHERE from= :from AND to= :to")
+    @Query("SELECT amount from currencies WHERE 'from' = :from AND 'to' = :to")
     fun getConversionRate(from: String, to: String): Flowable<Double>;
 
 }
