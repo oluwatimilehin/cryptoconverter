@@ -7,7 +7,7 @@ import android.arch.persistence.room.RoomDatabase
  * Created by Oluwatimilehin on 12/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-@Database(entities = arrayOf(Card::class, Currency::class), version = 1)
+@Database(entities = arrayOf(Card::class, Currency::class), version = 2)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun cardDao(): CardDao;
     abstract fun currencyDao(): CurrencyDao
