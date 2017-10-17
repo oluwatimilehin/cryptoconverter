@@ -1,6 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.data
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
@@ -13,10 +14,11 @@ import android.arch.persistence.room.PrimaryKey
         unique = true)
         ))
 data class Currency(
+        @PrimaryKey(autoGenerate = true)
+        val uid: Long = 0,
         val from: String,
         val to: String,
         val amount: Double
 ){
-    @PrimaryKey(autoGenerate = true)
-    val uid: Long = 0
+       @Ignore constructor(): this(0, "", "", 0.0)
 }
