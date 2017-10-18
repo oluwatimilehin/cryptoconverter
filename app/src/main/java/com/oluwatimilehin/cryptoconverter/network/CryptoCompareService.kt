@@ -1,6 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.network
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,10 +14,10 @@ import retrofit2.http.Query
  */
 interface CryptoCompareService {
     @GET("data/price?fsym=ETH")
-    fun getETHRates(@Query("tsyms") tsyms : String) : Observable<HashMap<String, Double>>
+    fun getETHRates(@Query("tsyms") tsyms : String) : Single<HashMap<String, Double>>
 
     @GET("data/price?fsym=BTC")
-    fun getBTCRates(@Query("tsyms") tsyms: String) : Observable<HashMap<String, Double>>
+    fun getBTCRates(@Query("tsyms") tsyms: String) : Single<HashMap<String, Double>>
 
     /**
      * Companion object to create the CryptoCompareService
