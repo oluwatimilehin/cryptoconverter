@@ -1,6 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.cards;
 
 import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.Currency
 
 /**
  * Created by Oluwatimilehin on 13/10/2017.
@@ -17,7 +18,7 @@ interface CardsContract {
 
     interface Presenter{
         fun loadDataFromApi()
-        fun saveDataInDb()
+        fun saveDataInDb(list: List<Currency>)
         fun loadDataFromDb()
         fun attachView(view: CardsContract.View)
         fun onDestroy()

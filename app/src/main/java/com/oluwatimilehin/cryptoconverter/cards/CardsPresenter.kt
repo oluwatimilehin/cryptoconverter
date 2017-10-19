@@ -5,10 +5,12 @@ import com.mynameismidori.currencypicker.ExtendedCurrency
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.data.Currency
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
-import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 
 
@@ -20,6 +22,7 @@ class CardsPresenter : CardsContract.Presenter {
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();
+    val scheduler: Scheduler = Schedulers.io()
 
     override fun attachView(view: CardsContract.View) {
         this.view = view
@@ -32,33 +35,50 @@ class CardsPresenter : CardsContract.Presenter {
     }
 
     override fun loadDataFromApi() {
-        val currencies = arrayOf(ExtendedCurrency.CURRENCIES)
+        val currencies = ExtendedCurrency.CURRENCIES
+
+        val list: ArrayList<String> = ArrayList();
+
+        for(item: ExtendedCurrency in currencies){
+            list.add(item.code)
+        }
 
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
-        val countries: String = TextUtils.join(",", currencies)
+        val countries: String = TextUtils.join(",", list)
 
-        val btcRates: Observable<List<Currency>> = cryptoApi.getBTCRates(countries)
+        val btcRates: Single<List<Currency>> = cryptoApi.getBTCRates(countries)
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError { e -> e.printStackTrace() }
                 .flatMap { result: HashMap<String, Double> ->
-                    return@flatMap Observable.just(createCurrencyObjects
+                    return@flatMap Single.just(createCurrencyObjects
                     ("BTC",
                             result))
                 }
 
-        val ethRates: Observable<List<Currency>> = cryptoApi.getETHRates(countries)
-                .flatMap { result: HashMap<String, Double> ->
-                    return@flatMap Observable.just(createCurrencyObjects("ETH", result))
-                }
 
-        val apiCall: Disposable = Observable.concat(ethRates, btcRates)
-                .subscribeOn(Schedulers.newThread())
+        val ethRates: Single<List<Currency>> = cryptoApi.getETHRates(countries)
+                .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext { values: List<Currency> ->
-                    run {
-                        App.database?.currencyDao()?.insertAllCurrencies(values)
-                    }
+                .flatMap { result: HashMap<String, Double> ->
+                    return@flatMap Single.just(createCurrencyObjects("ETH", result))
                 }
                 .doOnError { e -> e.printStackTrace() }
-                .subscribe();
+
+
+        val apiCall: Disposable = Single.zip(btcRates, ethRates, BiFunction { ethlist:
+                                                                              List<Currency>,
+                                                                              btcList:
+                                                                              List<Currency> ->
+            val list: ArrayList<Currency> = ArrayList();
+            list.addAll(ethlist)
+            list.addAll(btcList)
+            return@BiFunction list
+        })
+                .doOnSuccess{list ->
+                    saveDataInDb(list)}
+                .doOnError{e -> e.printStackTrace()}
+                .subscribe()
 
         disposables.add(apiCall)
     }
@@ -74,8 +94,8 @@ class CardsPresenter : CardsContract.Presenter {
         return list;
     }
 
-    override fun saveDataInDb() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveDataInDb(list: List<Currency>) {
+        App.database?.currencyDao()?.insertAllCurrencies(list)
     }
 
     override fun loadDataFromDb() {
