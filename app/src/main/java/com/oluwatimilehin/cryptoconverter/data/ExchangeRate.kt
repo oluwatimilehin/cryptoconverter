@@ -12,5 +12,5 @@ class ExchangeRate{
     lateinit var ethRates: HashMap<String, Double>
 
     @SerializedName("BTC")
-    lateinit var bthRates: HashMap<String, Double>
+    lateinit var btcRates: HashMap<String, Double>
 }
