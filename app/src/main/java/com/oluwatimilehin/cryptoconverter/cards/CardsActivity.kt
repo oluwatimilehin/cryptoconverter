@@ -24,7 +24,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        cardsPresenter = CardsPresenter()
+        cardsPresenter = CardsPresenter(this)
         cardsPresenter.attachView(this)
     }
 
