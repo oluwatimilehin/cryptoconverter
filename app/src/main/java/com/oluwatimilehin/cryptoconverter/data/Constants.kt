@@ -29,6 +29,8 @@ class Constants{
                 "CHF",
                 "CLP",
                 "CNY")
+
+        val currenciesString: String = listOfCurrencies.joinToString {","}
     }
 
 }
