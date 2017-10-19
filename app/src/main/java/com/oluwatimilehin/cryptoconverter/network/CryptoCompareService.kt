@@ -1,5 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.network
 
+import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -13,7 +14,7 @@ import retrofit2.http.Query
  */
 interface CryptoCompareService {
     @GET("data/pricemulti?fsyms=BTC,ETH")
-    fun getETHRates(@Query("tsyms") tsyms : String) : Single<HashMap<String, Double>>
+    fun getETHRates(@Query("tsyms") tsyms : String) : Single<ExchangeRate>
 
 
     /**
