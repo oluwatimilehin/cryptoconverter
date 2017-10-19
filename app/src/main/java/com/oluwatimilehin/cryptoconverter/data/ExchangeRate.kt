@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
 class ExchangeRate{
 
     @SerializedName("ETH")
-    lateinit var ethRates: HashMap<String, Double>
+    var ethRates: HashMap<String, Double> = HashMap()
 
     @SerializedName("BTC")
-    lateinit var btcRates: HashMap<String, Double>
+    var btcRates: HashMap<String, Double> = HashMap()
 }
