@@ -5,26 +5,30 @@ package com.oluwatimilehin.cryptoconverter.data
  * oluwatimilehinadeniran@gmail.com.
  */
 class Constants{
-    val listOfCurrencies: List<String> = listOf("EUR",
-            "USD",
-            "GBP",
-            "CZK",
-            "TRY",
-            "JPY",
-            "NGN",
-            "AED",
-            "AFN",
-            "ARS",
-            "AUD",
-            "BDT",
-            "BGN",
-            "BHD",
-            "BND",
-            "BOB",
-            "BRL",
-            "BTN",
-            "CAD",
-            "CHF",
-            "CLP",
-            "CNY")
+
+    companion object {
+        val listOfCurrencies: List<String> = listOf("EUR",
+                "USD",
+                "GBP",
+                "CZK",
+                "TRY",
+                "JPY",
+                "NGN",
+                "AED",
+                "AFN",
+                "ARS",
+                "AUD",
+                "BDT",
+                "BGN",
+                "BHD",
+                "BND",
+                "BOB",
+                "BRL",
+                "BTN",
+                "CAD",
+                "CHF",
+                "CLP",
+                "CNY")
+    }
+
 }
