@@ -1,7 +1,7 @@
 package com.oluwatimilehin.cryptoconverter
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -64,9 +64,11 @@ class GSONMappingTests {
                 "}\n" +
                 "}";
 
-        val type = object : TypeToken<HashMap<String, String>>(){}.type;
-        val map: HashMap<String, String> = Gson().fromJson(jsonString, type);
+              val gson: Gson = Gson()
+              val exchange: ExchangeRate? = gson.fromJson(jsonString, ExchangeRate::class.java)
 
-        assertTrue(map.size == 7);
+              assertTrue(exchange?.ethRates?.size == 22);
+              assertTrue(exchange?.btcRates?.size == 22);
+
     }
 }
