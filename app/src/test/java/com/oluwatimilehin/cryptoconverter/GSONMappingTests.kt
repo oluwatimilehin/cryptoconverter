@@ -65,10 +65,10 @@ class GSONMappingTests {
                 "}";
 
               val gson: Gson = Gson()
-              val exchange: ExchangeRate? = gson.fromJson(jsonString, ExchangeRate::class.java)
+              val exchange: ExchangeRate = gson.fromJson(jsonString, ExchangeRate::class.java)
 
-              assertTrue(exchange?.ethRates?.size == 22);
-              assertTrue(exchange?.btcRates?.size == 22);
+              assertTrue(exchange.ethRates.size == 22);
+              assertTrue(exchange.btcRates.size == 22);
 
     }
 }
