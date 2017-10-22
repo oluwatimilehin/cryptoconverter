@@ -1,5 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.data
 
+import android.text.TextUtils
+
 /**
  * Created by Oluwatimilehin on 19/10/2017.
  * oluwatimilehinadeniran@gmail.com.
@@ -30,7 +32,7 @@ class Constants{
                 "CLP",
                 "CNY")
 
-        val currenciesString: String = listOfCurrencies.joinToString {","}
+        val currenciesString: String = TextUtils.join(",", listOfCurrencies)
     }
 
 }
