@@ -6,14 +6,17 @@ import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
+    override fun displaySuccessMessage() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun displayErrorMessage() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     lateinit var cardsPresenter: CardsContract.Presenter;
 
     override fun showProgressIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun hideProgressIndicator() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -24,7 +27,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        cardsPresenter = CardsPresenter(this)
+        cardsPresenter = CardsPresenter()
         cardsPresenter.attachView(this)
     }
 

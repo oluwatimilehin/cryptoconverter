@@ -12,7 +12,8 @@ interface CardsContract {
 
     interface View{
         fun showProgressIndicator()
-        fun hideProgressIndicator()
+        fun displaySuccessMessage()
+        fun displayErrorMessage()
         fun updateRecyclerView(cards: kotlin.collections.List<Card>)
     }
 

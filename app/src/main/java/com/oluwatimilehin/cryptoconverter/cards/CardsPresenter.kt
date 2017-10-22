@@ -1,7 +1,5 @@
 package com.oluwatimilehin.cryptoconverter.cards
 
-import android.content.Context
-import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.data.Constants
 import com.oluwatimilehin.cryptoconverter.data.Currency
@@ -19,12 +17,11 @@ import io.reactivex.schedulers.Schedulers
  * Created by Oluwatimilehin on 13/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class CardsPresenter(paramContext: Context) : CardsContract.Presenter {
+class CardsPresenter : CardsContract.Presenter {
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();
     val scheduler: Scheduler = Schedulers.io()
-    val context = paramContext
 
     override fun attachView(view: CardsContract.View) {
         this.view = view
@@ -54,8 +51,8 @@ class CardsPresenter(paramContext: Context) : CardsContract.Presenter {
                 .map { result -> saveDataInDb(result)}
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Toast.makeText(context, "Saved to database", Toast
-                        .LENGTH_SHORT).show()}, { e -> e.printStackTrace()} )
+                    view.displaySuccessMessage()
+                    }, { e -> e.printStackTrace()} )
 
 
         disposables.add(apiCallDisposable)
