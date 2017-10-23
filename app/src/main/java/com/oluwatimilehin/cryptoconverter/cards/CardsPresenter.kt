@@ -51,7 +51,7 @@ class CardsPresenter : CardsContract.Presenter {
                 .map { result -> saveDataInDb(result)}
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    view.displaySuccessMessage()
+                    view.onDatabaseUpdateSuccess()
                     }, { e -> e.printStackTrace()} )
 
 

@@ -2,13 +2,21 @@ package com.oluwatimilehin.cryptoconverter.cards
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
-    override fun displaySuccessMessage() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onDatabaseUpdateSuccess() {
+        Toast.makeText(this, "Database updated", Toast.LENGTH_SHORT).show();
     }
+
+    override fun onApiCallErrorResponse() {
+        Toast.makeText(this, "An Error occured", Toast.LENGTH_SHORT).show();
+        TODO("not implemented") //To change body of created functions use File | Settings | File
+        // Templates.
+    }
+
 
     override fun displayErrorMessage() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
