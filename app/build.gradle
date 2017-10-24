@@ -16,6 +16,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -26,6 +32,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        androidTest.assets.srcDirs +=
+                files("$projectDir/schemas".toString())
+    }
+    configurations.all {
+        resolutionStrategy {
+            force 'com.google.code.gson:gson:2.7', 'com.google.code.gson:gson:2.8.0'
+        }
     }
 }
 
@@ -58,4 +73,5 @@ dependencies {
     compile 'android.arch.persistence.room:rxjava2:1.0.0-alpha9-1'
     kapt "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
     compile 'com.facebook.stetho:stetho:1.5.0'
+    androidTestImplementation 'android.arch.persistence.room:testing:1.0.0-alpha9-1'
 }
