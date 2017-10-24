@@ -1,6 +1,9 @@
 package com.oluwatimilehin.cryptoconverter.data
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import io.reactivex.Flowable
 
 /**
@@ -13,10 +16,11 @@ interface CurrencyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllCurrencies(currencies: List<Currency>)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateAmounts(currencies: List<Currency>)
+    @Query("UPDATE currencies SET 'selected' = :selected, 'drawable' = :drawable, 'full_name' = " +
+            ":fullName" +
+            " WHERE 'from' = :from AND 'to' = :to ")
+    fun updateCurrency(selected: Int, drawable: Int, fullName: String, from: String, to: String)
 
-    @Query("SELECT amount from currencies WHERE 'from' = :from AND 'to' = :to")
-    fun getConversionRate(from: String, to: String): Flowable<Double>;
-
+    @Query("SELECT * from currencies WHERE 'selected' = 1")
+    fun getAllCards(): Flowable<List<Currency>>
 }
