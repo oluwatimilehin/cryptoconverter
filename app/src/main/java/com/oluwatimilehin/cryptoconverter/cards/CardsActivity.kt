@@ -13,8 +13,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onApiCallErrorResponse() {
         Toast.makeText(this, "An Error occured", Toast.LENGTH_SHORT).show();
-        TODO("not implemented") //To change body of created functions use File | Settings | File
-        // Templates.
     }
 
 
