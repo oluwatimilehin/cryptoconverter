@@ -1,7 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.data
 
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
@@ -20,5 +19,7 @@ data class Currency(
         val to: String,
         val amount: Double
 ){
-       @Ignore constructor(): this(0, "", "", 0.0)
+       var drawable: Int = 0;
+       var selected: Int = 0;
+       var fullName: String = ""
 }
