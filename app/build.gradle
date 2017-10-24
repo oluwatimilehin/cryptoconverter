@@ -74,4 +74,5 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
     compile 'com.facebook.stetho:stetho:1.5.0'
     androidTestImplementation 'android.arch.persistence.room:testing:1.0.0-alpha9-1'
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.1.51"
 }
