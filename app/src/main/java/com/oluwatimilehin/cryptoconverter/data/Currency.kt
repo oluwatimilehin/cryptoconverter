@@ -1,5 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.data
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
@@ -21,5 +22,7 @@ data class Currency(
 ){
        var drawable: Int = 0;
        var selected: Int = 0;
+
+       @ColumnInfo(name = "full_name")
        var fullName: String = ""
 }
