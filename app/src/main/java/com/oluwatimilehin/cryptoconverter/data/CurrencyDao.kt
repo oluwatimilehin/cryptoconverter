@@ -16,6 +16,12 @@ interface CurrencyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllCurrencies(currencies: List<Currency>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCurrency(currency: Currency)
+
+    @Query("SELECT * from currencies where 'from' = :from and 'to' = :to")
+    fun getCurrencyByDetails(from: String, to: String): Currency
+
     @Query("UPDATE currencies SET 'selected' = :selected, 'drawable' = :drawable, 'full_name' = " +
             ":fullName" +
             " WHERE 'from' = :from AND 'to' = :to ")

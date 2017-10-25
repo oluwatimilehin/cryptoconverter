@@ -9,7 +9,7 @@ import android.arch.persistence.room.migration.Migration
  * Created by Oluwatimilehin on 12/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-@Database(entities = arrayOf(Card::class, Currency::class), version = 3)
+@Database(entities = arrayOf(Card::class, Currency::class), version = 4)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun currencyDao(): CurrencyDao;
 
