@@ -21,6 +21,7 @@ class App : Application(){
         Stetho.initializeWithDefaults(this);
 
         App.database = Room.databaseBuilder(this, AppDatabase::class.java, "app-db")
+                .addMigrations(AppDatabase.MIGRATION_2_3)
                 .build()
     }
 }
