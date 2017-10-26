@@ -16,8 +16,8 @@ interface CurrencyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllCurrencies(currencies: List<Currency>)
 
-    @Query("SELECT amount from currencies WHERE 'from' = :from AND 'to' = :to")
-    fun getConversionRate(from: String, to: String): Flowable<Double>;
+    @Query("SELECT amount from currencies WHERE \"from\" = :from AND \"to\" = :to")
+    fun getConversionRate(from: String, to: String): Flowable<Double>
 
     @Query("SELECT * from currencies")
     fun getAllCurrencies(): Flowable<List<Currency>>
