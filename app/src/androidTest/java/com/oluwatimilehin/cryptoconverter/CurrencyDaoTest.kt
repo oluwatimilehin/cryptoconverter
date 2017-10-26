@@ -58,6 +58,15 @@ class CurrencyDaoTest{
                 .assertValue { currencies -> currencies.size == 4 }
     }
 
+    @Test
+    fun getCorrectConversionRate(){
+        currencyDao.insertAllCurrencies(listOfCurrencies)
+
+        currencyDao.getConversionRate("ETH","NGN")
+                .test()
+                .assertValue { value -> value == 344.24 }
+    }
+
     @After
     fun closeDb(){
         appDatabase.close()
