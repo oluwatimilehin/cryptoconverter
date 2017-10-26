@@ -12,7 +12,7 @@ import io.reactivex.Flowable
  */
 @Dao
 interface CardDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insert(card: Card)
 
     @Query("SELECT * from cards")
@@ -22,7 +22,7 @@ interface CardDao {
     fun updateAmount(newAmount: Double, from: String, to: String)
 
     @Query("SELECT * from cards WHERE \"from\" = :from AND \"to\" = :to")
-    fun getCard(from: String, to: String)
+    fun getCard(from: String, to: String): Flowable<Card>
 
     @Query("DELETE from cards")
     fun deleteAllCards();
