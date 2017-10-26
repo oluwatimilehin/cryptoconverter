@@ -25,7 +25,7 @@ abstract class BaseDaoTest{
     val instantTaskExecutor = InstantTaskExecutorRule()
 
     @Before
-    fun setUp(){
+    open fun setUp(){
         appDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
                 AppDatabase::class.java)
                 .allowMainThreadQueries()
