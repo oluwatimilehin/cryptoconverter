@@ -37,9 +37,7 @@ class CurrencyDaoTest{
         currencyThree = Currency(0, "BTC", "USD", 400.12)
 
         listOfCurrencies = ArrayList()
-        listOfCurrencies.add(currencyOne)
-        listOfCurrencies.add(currencyTwo)
-        listOfCurrencies.add(currencyThree)
+        listOfCurrencies.addAll(listOf(currencyOne, currencyTwo, currencyThree))
     }
 
     @Test
@@ -48,6 +46,16 @@ class CurrencyDaoTest{
         currencyDao.getAllCurrencies()
                 .test()
                 .assertValue { currencies -> currencies.size == 3 }
+
+        val currencyFour = Currency(0, "ETH", "EUR", 212.12)
+        val currencyThreeConflict = Currency(0, "ETH", "NGN", 222.23)
+        listOfCurrencies.addAll(listOf(currencyFour, currencyThreeConflict))
+
+        //Test that there is a replacement if a conflict happens
+        currencyDao.insertAllCurrencies(listOfCurrencies)
+        currencyDao.getAllCurrencies()
+                .test()
+                .assertValue { currencies -> currencies.size == 4 }
     }
 
     @After
