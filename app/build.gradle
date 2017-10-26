@@ -74,5 +74,10 @@ dependencies {
     compile 'android.arch.persistence.room:rxjava2:1.0.0-alpha9-1'
     kapt "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
     compile 'com.facebook.stetho:stetho:1.5.0'
-    androidTestImplementation 'android.arch.persistence.room:testing:1.0.0-alpha5'
+    androidTestImplementation 'android.arch.persistence.room:testing:1.0.0-alpha9-1'
+    androidTestCompile ("android.arch.core:core-testing:1.0.0-alpha9-1") {
+        exclude module: 'support-compat'
+        exclude module: 'support-annotations'
+        exclude module: 'support-core-utils'
+    }
 }
