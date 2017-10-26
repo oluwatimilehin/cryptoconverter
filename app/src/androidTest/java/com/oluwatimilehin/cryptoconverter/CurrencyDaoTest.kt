@@ -1,6 +1,5 @@
 package com.oluwatimilehin.cryptoconverter
 import com.oluwatimilehin.cryptoconverter.data.Currency
-import org.junit.After
 import org.junit.Test
 
 /**
@@ -36,8 +35,4 @@ class CurrencyDaoTest : BaseDaoTest(){
                 .assertValue { value -> value == 344.24 }
     }
 
-    @After
-    fun closeDb(){
-        appDatabase.close()
-    }
 }

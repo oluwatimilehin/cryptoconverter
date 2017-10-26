@@ -4,8 +4,10 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import com.oluwatimilehin.cryptoconverter.data.AppDatabase
+import com.oluwatimilehin.cryptoconverter.data.CardDao
 import com.oluwatimilehin.cryptoconverter.data.Currency
 import com.oluwatimilehin.cryptoconverter.data.CurrencyDao
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 
@@ -15,11 +17,9 @@ import org.junit.Rule
  */
 abstract class BaseDaoTest{
     lateinit var appDatabase: AppDatabase
-    lateinit var currencyOne: Currency
-    lateinit var currencyTwo: Currency
-    lateinit var currencyThree: Currency
     lateinit var listOfCurrencies: MutableList<Currency>
     lateinit var currencyDao: CurrencyDao
+    lateinit var cardDao: CardDao
 
     @JvmField @Rule
     val instantTaskExecutor = InstantTaskExecutorRule()
@@ -31,12 +31,18 @@ abstract class BaseDaoTest{
                 .allowMainThreadQueries()
                 .build()
         currencyDao = appDatabase.currencyDao()
+        cardDao = appDatabase.cardDao()
 
-        currencyOne = Currency(0, "BTC", "NGN", 4000.0)
-        currencyTwo = Currency(0, "ETH", "NGN", 344.24)
-        currencyThree = Currency(0, "BTC", "USD", 400.12)
+        val currencyOne = Currency(0, "BTC", "NGN", 4000.0)
+        val currencyTwo = Currency(0, "ETH", "NGN", 344.24)
+        val currencyThree = Currency(0, "BTC", "USD", 400.12)
 
         listOfCurrencies = ArrayList()
         listOfCurrencies.addAll(listOf(currencyOne, currencyTwo, currencyThree))
+    }
+
+    @After
+    fun closeDb(){
+        appDatabase.close()
     }
 }
