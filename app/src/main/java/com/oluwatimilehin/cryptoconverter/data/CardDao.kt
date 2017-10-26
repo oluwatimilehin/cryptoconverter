@@ -21,6 +21,9 @@ interface CardDao {
     @Query("UPDATE cards SET amount = :newAmount WHERE \"from\" = :from AND \"to\" = :to")
     fun updateAmount(newAmount: Double, from: String, to: String)
 
+    @Query("SELECT * from cards WHERE \"from\" = :from AND \"to\" = :to")
+    fun getCard(from: String, to: String)
+
     @Query("DELETE from cards")
     fun deleteAllCards();
 }
