@@ -48,19 +48,20 @@ class CardDaoTest : BaseDaoTest() {
         currencyDao.insertAllCurrencies(listOfCurrencies)
 
         currencyDao.getAllCurrencies()
-                .flatMap {
+                .map { currencies ->
                     cardDao.getAllCards()
-                }
-                .doOnNext { cards ->
-                    run {
-                        for (card in cards) {
-                            currencyDao.getConversionRate(card.from, card.to)
-                                    .subscribe({ amount ->
-                                        cardDao.updateAmount(amount, card
-                                                .from, card.to)
-                                    }, { e -> e.printStackTrace() })
-                        }
-                    }
+                            .doOnSuccess { cards ->
+                                run {
+                                    for (card in cards) {
+                                        currencyDao.getConversionRate(card.from, card.to)
+                                                .subscribe({ amount ->
+                                                    cardDao.updateAmount(amount, card
+                                                            .from, card.to)
+                                                }, { e -> e.printStackTrace() })
+                                    }
+                                }
+                            }
+                            .subscribe()
                 }
                 .subscribe()
 
