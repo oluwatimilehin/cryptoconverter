@@ -7,30 +7,6 @@ import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
-    override fun onDatabaseUpdateSuccess() {
-        Toast.makeText(this, "Database updated", Toast.LENGTH_SHORT).show();
-    }
-
-    override fun onApiCallErrorResponse() {
-        Toast.makeText(this, "An Error occured", Toast.LENGTH_SHORT).show();
-        TODO("not implemented") //To change body of created functions use File | Settings | File
-        // Templates.
-    }
-
-
-    override fun displayErrorMessage() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    lateinit var cardsPresenter: CardsContract.Presenter;
-
-    override fun showProgressIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updateRecyclerView(cards: List<Card>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,4 +19,27 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         super.onDestroy()
         cardsPresenter.onDestroy()
     }
+
+    override fun showProgressIndicator(bool: Boolean) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showEmptyCardsError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showApiCallError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onDatabaseUpdateSuccess() {
+        Toast.makeText(this, "Database updated", Toast.LENGTH_SHORT).show();
+    }
+
+    lateinit var cardsPresenter: CardsContract.Presenter;
+
+    override fun updateRecyclerView(cards: List<Card>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

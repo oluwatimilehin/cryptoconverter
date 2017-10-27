@@ -18,6 +18,32 @@ import io.reactivex.schedulers.Schedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter {
+    override fun loadCurrencies() {
+        val cryptoApi: CryptoCompareService = CryptoCompareService.create()
+        val apiCallDisposable: Disposable = cryptoApi.getRates(Constants.currenciesString)
+                .subscribeOn(Schedulers.io())
+                .doOnError { e -> e.printStackTrace() }
+                .flatMap { rates: ExchangeRate ->
+                    val combinedList: MutableList<Currency> = ArrayList()
+
+                    combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates))
+                    combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
+
+                    return@flatMap Single.just(combinedList)
+                }
+                .map { result -> saveDataInDb(result) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    view.onDatabaseUpdateSuccess()
+                }, { e -> e.printStackTrace() })
+
+
+        disposables.add(apiCallDisposable)
+    }
+
+    override fun loadCards() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();
@@ -25,7 +51,7 @@ class CardsPresenter : CardsContract.Presenter {
 
     override fun attachView(view: CardsContract.View) {
         this.view = view
-        loadDataFromApi()
+        loadCurrencies()
     }
 
 
@@ -33,33 +59,7 @@ class CardsPresenter : CardsContract.Presenter {
         disposables.clear()
     }
 
-    override fun loadDataFromApi() {
-        val cryptoApi: CryptoCompareService = CryptoCompareService.create()
-
-
-        val apiCallDisposable: Disposable = cryptoApi.getRates(Constants.currenciesString)
-                .subscribeOn(Schedulers.io())
-                .doOnError{ e -> e.printStackTrace()}
-                .flatMap { rates: ExchangeRate ->
-                    val combinedList: MutableList<Currency> = ArrayList()
-
-                    combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates ))
-                    combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
-
-                    return@flatMap  Single.just(combinedList)
-                }
-                .map { result -> saveDataInDb(result)}
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    view.onDatabaseUpdateSuccess()
-                    }, { e -> e.printStackTrace()} )
-
-
-        disposables.add(apiCallDisposable)
-
-    }
-
-    fun createCurrencyObjects(from: String, map: HashMap<String, Double>): List<Currency> {
+    private fun createCurrencyObjects(from: String, map: HashMap<String, Double>): List<Currency> {
         val list = ArrayList<Currency>(0)
 
         for (key in map.keys) {
@@ -70,12 +70,8 @@ class CardsPresenter : CardsContract.Presenter {
         return list;
     }
 
-    override fun saveDataInDb(list: List<Currency>) {
+    fun saveDataInDb(list: List<Currency>) {
         App.database?.currencyDao()?.insertAllCurrencies(list)
-    }
-
-    override fun loadDataFromDb() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }
