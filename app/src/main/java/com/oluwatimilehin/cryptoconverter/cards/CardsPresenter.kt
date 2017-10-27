@@ -21,7 +21,7 @@ class CardsPresenter : CardsContract.Presenter {
 
         currencyDao.checkIfCurrenciesExist()
                 .observeOn(scheduler)
-                .subscribe({ }, { view.showEmptyCurrenciesError()})
+                .subscribe({ view.currenciesExist() }, { view.showEmptyCurrenciesError()})
 
         disposables.add(currencyDao.getAllCurrencies()
                 .subscribeOn(scheduler)
@@ -34,7 +34,7 @@ class CardsPresenter : CardsContract.Presenter {
 
         disposables.add(cryptoApi.getRates(Constants.currenciesString)
                 .subscribeOn(Schedulers.io())
-                .doOnError { e -> e.printStackTrace() }
+                .doOnError { view.showApiCallError()}
                 .flatMap { rates: ExchangeRate ->
                     val combinedList: MutableList<Currency> = ArrayList()
 
