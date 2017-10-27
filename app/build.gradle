@@ -55,6 +55,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.android.support:design:23.0.0'
 
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
@@ -74,6 +75,7 @@ dependencies {
     compile 'android.arch.persistence.room:rxjava2:1.0.0-alpha9-1'
     kapt "android.arch.persistence.room:compiler:1.0.0-alpha9-1"
     compile 'com.facebook.stetho:stetho:1.5.0'
+
     androidTestImplementation 'android.arch.persistence.room:testing:1.0.0-alpha9-1'
     androidTestCompile ("android.arch.core:core-testing:1.0.0-alpha9-1") {
         exclude module: 'support-compat'
