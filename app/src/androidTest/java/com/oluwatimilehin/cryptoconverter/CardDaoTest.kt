@@ -30,7 +30,7 @@ class CardDaoTest : BaseDaoTest() {
     fun insertCardsAndValidateSize() {
 
         try {
-            val duplicateCard = Card(0, "Euros", "BTC", "BTN", 211.33, 1233)
+            val duplicateCard = Card(0, "Euros", "BTC", "NGN", 211.33, 1233)
             cardDao.insert(duplicateCard)
 
             fail()
