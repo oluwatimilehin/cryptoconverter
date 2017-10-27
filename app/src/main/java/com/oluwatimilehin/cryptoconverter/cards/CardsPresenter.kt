@@ -1,15 +1,12 @@
 package com.oluwatimilehin.cryptoconverter.cards
 
 import com.oluwatimilehin.cryptoconverter.App
-import com.oluwatimilehin.cryptoconverter.data.Constants
-import com.oluwatimilehin.cryptoconverter.data.Currency
-import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
+import com.oluwatimilehin.cryptoconverter.data.*
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
@@ -20,7 +17,7 @@ import io.reactivex.schedulers.Schedulers
 class CardsPresenter : CardsContract.Presenter {
     override fun loadCurrencies() {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
-        val apiCallDisposable: Disposable = cryptoApi.getRates(Constants.currenciesString)
+       disposables.add(cryptoApi.getRates(Constants.currenciesString)
                 .subscribeOn(Schedulers.io())
                 .doOnError { e -> e.printStackTrace() }
                 .flatMap { rates: ExchangeRate ->
@@ -35,22 +32,54 @@ class CardsPresenter : CardsContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     view.onDatabaseUpdateSuccess()
-                }, { e -> e.printStackTrace() })
+                }, { e -> e.printStackTrace() }))
 
-
-        disposables.add(apiCallDisposable)
+        disposables.add(currencyDao.getAllCurrencies()
+                .subscribeOn(scheduler)
+                .map { cardDao.getAllCards()
+                        .doOnSuccess { cards ->
+                            run {
+                                for (card in cards) {
+                                    currencyDao.getConversionRate(card.from, card.to)
+                                            .subscribe({ amount ->
+                                                cardDao.updateAmount(amount, card
+                                                        .from, card.to)
+                                            }, { e -> e.printStackTrace() })
+                                }
+                                view.updateRecyclerView(cards)
+                            }
+                        }
+                        .doOnError{view.showEmptyCardsError()}
+                        .subscribe()
+                }
+                .subscribe())
     }
 
     override fun loadCards() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        disposables.add(cardDao.getAllCards()
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ cards ->
+                    view.updateRecyclerView(cards)
+                }, {
+                    view.showEmptyCardsError()
+                }))
+
     }
+
+
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();
-    val scheduler: Scheduler = Schedulers.io()
+    val scheduler: Scheduler = Schedulers.newThread()
+    lateinit var cardDao: CardDao
+    lateinit var currencyDao: CurrencyDao
 
     override fun attachView(view: CardsContract.View) {
         this.view = view
+        currencyDao = App.database.currencyDao()
+        cardDao = App.database.cardDao()
+
         loadCurrencies()
     }
 
@@ -67,11 +96,11 @@ class CardsPresenter : CardsContract.Presenter {
             list.add(Currency(0, from, key, amount!!))
         }
 
-        return list;
+        return list
     }
 
     fun saveDataInDb(list: List<Currency>) {
-        App.database?.currencyDao()?.insertAllCurrencies(list)
+        currencyDao.insertAllCurrencies(list)
     }
 
 }

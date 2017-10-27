@@ -13,6 +13,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         setContentView(R.layout.activity_main)
         cardsPresenter = CardsPresenter()
         cardsPresenter.attachView(this)
+        cardsPresenter.loadCards()
     }
 
     override fun onDestroy() {
