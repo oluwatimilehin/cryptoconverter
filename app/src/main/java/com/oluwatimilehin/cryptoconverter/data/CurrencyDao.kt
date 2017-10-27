@@ -23,6 +23,9 @@ interface CurrencyDao {
     @Query("SELECT * from currencies")
     fun getAllCurrencies(): Flowable<List<Currency>>
 
+    @Query("SELECT * from currencies")
+    fun checkIfCurrenciesExist(): Single<List<Currency>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrency(currency: Currency)
 

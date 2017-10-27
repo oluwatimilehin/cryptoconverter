@@ -7,6 +7,13 @@ import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
+    override fun showEmptyCurrenciesError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun currenciesExist() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

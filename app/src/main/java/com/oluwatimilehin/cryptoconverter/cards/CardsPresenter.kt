@@ -15,9 +15,24 @@ import io.reactivex.schedulers.Schedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter {
+
     override fun loadCurrencies() {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
-       disposables.add(cryptoApi.getRates(Constants.currenciesString)
+
+        currencyDao.checkIfCurrenciesExist()
+                .observeOn(scheduler)
+                .subscribe({ }, { view.showEmptyCurrenciesError()})
+
+        disposables.add(currencyDao.getAllCurrencies()
+                .subscribeOn(scheduler)
+                .map {
+                    view.currenciesExist()
+                    updateCards()
+                            .subscribe()
+                }
+                .subscribe())
+
+        disposables.add(cryptoApi.getRates(Constants.currenciesString)
                 .subscribeOn(Schedulers.io())
                 .doOnError { e -> e.printStackTrace() }
                 .flatMap { rates: ExchangeRate ->
@@ -34,25 +49,6 @@ class CardsPresenter : CardsContract.Presenter {
                     view.onDatabaseUpdateSuccess()
                 }, { e -> e.printStackTrace() }))
 
-        disposables.add(currencyDao.getAllCurrencies()
-                .subscribeOn(scheduler)
-                .map { cardDao.getAllCards()
-                        .doOnSuccess { cards ->
-                            run {
-                                for (card in cards) {
-                                    currencyDao.getConversionRate(card.from, card.to)
-                                            .subscribe({ amount ->
-                                                cardDao.updateAmount(amount, card
-                                                        .from, card.to)
-                                            }, { e -> e.printStackTrace() })
-                                }
-                                view.updateRecyclerView(cards)
-                            }
-                        }
-                        .doOnError{view.showEmptyCardsError()}
-                        .subscribe()
-                }
-                .subscribe())
     }
 
     override fun loadCards() {
@@ -67,7 +63,22 @@ class CardsPresenter : CardsContract.Presenter {
 
     }
 
-
+    fun updateCards(): Single<List<Card>> {
+        return cardDao.getAllCards()
+                .doOnSuccess { cards ->
+                    run {
+                        for (card in cards) {
+                            currencyDao.getConversionRate(card.from, card.to)
+                                    .subscribe({ amount ->
+                                        cardDao.updateAmount(amount, card
+                                                .from, card.to)
+                                    }, { e -> e.printStackTrace() })
+                        }
+                        view.updateRecyclerView(cards)
+                    }
+                }
+                .doOnError { view.showEmptyCardsError() }
+    }
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();

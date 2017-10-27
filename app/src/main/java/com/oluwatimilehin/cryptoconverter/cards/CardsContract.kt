@@ -12,6 +12,8 @@ interface CardsContract {
     interface View{
         fun showProgressIndicator(bool: Boolean)
         fun showEmptyCardsError()
+        fun showEmptyCurrenciesError()
+        fun currenciesExist()
         fun onDatabaseUpdateSuccess()
         fun showApiCallError()
         fun updateRecyclerView(cards: kotlin.collections.List<Card>)
