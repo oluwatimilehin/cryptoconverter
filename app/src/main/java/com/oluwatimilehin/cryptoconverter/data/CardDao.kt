@@ -1,9 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.data
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -27,4 +24,7 @@ interface CardDao {
 
     @Query("DELETE from cards")
     fun deleteAllCards()
+
+    @Delete
+    fun deleteCard(card: Card)
 }
