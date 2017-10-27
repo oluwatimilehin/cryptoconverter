@@ -1,7 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.data
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
@@ -10,12 +10,15 @@ import android.arch.persistence.room.PrimaryKey
  * oluwatimilehinadeniran@gmail.com.
  */
 @Entity(tableName = "cards",
-        indices = arrayOf(Index(value = *arrayOf("from","to"),
+        indices = arrayOf(Index(value = *arrayOf("from", "to"),
                 unique = true)
         ))
-data class Card( @PrimaryKey(autoGenerate = true)
-                 val uid: Long = 0,
-                 val cardName: String, val from: String, val to: String, val
-amount: Double){
-   @Ignore constructor() : this(0, "", "", "", 0.0)
+data class Card(@PrimaryKey(autoGenerate = true)
+                val uid: Long = 0,
+                @ColumnInfo(name = "currency_name")
+                val currencyName: String,
+                val from: String, val to: String, val
+                amount: Double,
+                val flag: Int
+) {
 };
