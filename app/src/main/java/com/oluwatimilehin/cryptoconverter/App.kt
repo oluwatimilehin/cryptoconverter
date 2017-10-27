@@ -12,7 +12,7 @@ import com.oluwatimilehin.cryptoconverter.data.AppDatabase
 class App : Application(){
 
     companion object {
-        var database: AppDatabase? = null
+       lateinit var database: AppDatabase
     }
 
     override fun onCreate() {
