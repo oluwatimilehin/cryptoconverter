@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Created by Oluwatimilehin on 12/10/2017.
@@ -16,7 +17,7 @@ interface CardDao {
     fun insert(card: Card)
 
     @Query("SELECT * from cards")
-    fun getAllCards(): Flowable<List<Card>>
+    fun getAllCards(): Single<List<Card>>
 
     @Query("UPDATE cards SET amount = :newAmount WHERE \"from\" = :from AND \"to\" = :to")
     fun updateAmount(newAmount: Double, from: String, to: String)
