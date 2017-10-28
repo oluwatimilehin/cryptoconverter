@@ -19,24 +19,49 @@ class CardsPresenter : CardsContract.Presenter {
     override fun loadCurrencies() {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
 
-        val currencyCheckObservable = currencyDao.checkIfCurrenciesExist()
+        currencyDao.checkIfCurrenciesExist()
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { currencies ->
-                    if(currencies.isEmpty()){
+                    if (currencies.isEmpty()) {
                         view.showEmptyCurrenciesError()
-                    } else{
+                    } else {
                         view.currenciesExist()
                     }
 
+                }
+                .map {
                     currencyDao.getAllCurrencies()
                             .subscribeOn(scheduler)
-                            .map {
-                                view.currenciesExist()
-                                updateCards()
-                                    .subscribe()}
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map { currencies ->
+                                if(!currencies.isEmpty()) {
+                                    view.currenciesExist()
+                                    updateCards()
+                                            .subscribe()
+                                }
+                            }
+                            .subscribe()
                 }
+                .map {
+                    cryptoApi.getRates(Constants.currenciesString)
+                            .subscribeOn(scheduler)
+                            .doOnError { view.showApiCallError() }
+                            .flatMap { rates: ExchangeRate ->
+                                val combinedList: MutableList<Currency> = ArrayList()
 
+                                combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates))
+                                combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
+
+                                return@flatMap Single.just(combinedList)
+                            }
+                            .map { result -> saveDataInDb(result) }
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                view.onDatabaseUpdateSuccess()
+                            }, { e -> e.printStackTrace() })
+                }
+                .subscribe()
 
 //        disposables.add(currencyDao.getAllCurrencies()
 //                .subscribeOn(scheduler)
@@ -46,22 +71,6 @@ class CardsPresenter : CardsContract.Presenter {
 //                }
 //                .subscribe())
 
-        disposables.add(cryptoApi.getRates(Constants.currenciesString)
-                .subscribeOn(scheduler)
-                .doOnError { view.showApiCallError()}
-                .flatMap { rates: ExchangeRate ->
-                    val combinedList: MutableList<Currency> = ArrayList()
-
-                    combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates))
-                    combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
-
-                    return@flatMap Single.just(combinedList)
-                }
-                .map { result -> saveDataInDb(result) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    view.onDatabaseUpdateSuccess()
-                }, { e -> e.printStackTrace() }))
 
     }
 
