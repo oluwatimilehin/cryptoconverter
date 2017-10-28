@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CryptoConverter</string>
+    <string name="loading_data">Loading data. Please wait</string>
 </resources>

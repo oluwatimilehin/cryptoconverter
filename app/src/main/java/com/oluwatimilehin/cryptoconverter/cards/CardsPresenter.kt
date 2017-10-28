@@ -20,20 +20,24 @@ class CardsPresenter : CardsContract.Presenter {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
 
         currencyDao.checkIfCurrenciesExist()
-                .observeOn(scheduler)
-                .subscribe({ view.currenciesExist() }, { view.showEmptyCurrenciesError()})
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { currencies ->
+                            view.currenciesExist() },
+                        { e ->
+                            view.showEmptyCurrenciesError()})
 
         disposables.add(currencyDao.getAllCurrencies()
                 .subscribeOn(scheduler)
                 .map {
-                    view.currenciesExist()
                     updateCards()
                             .subscribe()
                 }
                 .subscribe())
 
         disposables.add(cryptoApi.getRates(Constants.currenciesString)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(scheduler)
                 .doOnError { view.showApiCallError()}
                 .flatMap { rates: ExchangeRate ->
                     val combinedList: MutableList<Currency> = ArrayList()
@@ -65,6 +69,8 @@ class CardsPresenter : CardsContract.Presenter {
 
     fun updateCards(): Single<List<Card>> {
         return cardDao.getAllCards()
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { cards ->
                     run {
                         for (card in cards) {
@@ -82,7 +88,7 @@ class CardsPresenter : CardsContract.Presenter {
 
     lateinit var view: CardsContract.View;
     val disposables: CompositeDisposable = CompositeDisposable();
-    val scheduler: Scheduler = Schedulers.newThread()
+    val scheduler: Scheduler = Schedulers.single()
     lateinit var cardDao: CardDao
     lateinit var currencyDao: CurrencyDao
 

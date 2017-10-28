@@ -10,7 +10,6 @@ import com.oluwatimilehin.cryptoconverter.data.Card
 interface CardsContract {
 
     interface View{
-        fun showProgressIndicator(bool: Boolean)
         fun showEmptyCardsError()
         fun showEmptyCurrenciesError()
         fun currenciesExist()

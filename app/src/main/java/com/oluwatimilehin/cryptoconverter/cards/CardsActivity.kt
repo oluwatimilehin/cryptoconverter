@@ -2,25 +2,36 @@ package com.oluwatimilehin.cryptoconverter.cards
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
+import kotlinx.android.synthetic.main.activity_cards.*
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun showEmptyCurrenciesError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loadingIndicator.visibility = View.VISIBLE
+        loadingIndicator.show()
+        infoTV.text = getString(R.string.loading_data)
+        infoTV.visibility = View.VISIBLE
+
     }
 
     override fun currenciesExist() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        loadingIndicator.hide()
+        infoTV.visibility = View.GONE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_cards)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
+
         cardsPresenter = CardsPresenter()
         cardsPresenter.attachView(this)
         cardsPresenter.loadCards()
+
     }
 
     override fun onDestroy() {
@@ -28,16 +39,13 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsPresenter.onDestroy()
     }
 
-    override fun showProgressIndicator(bool: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     override fun showEmptyCardsError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun showApiCallError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onDatabaseUpdateSuccess() {
@@ -47,7 +55,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     lateinit var cardsPresenter: CardsContract.Presenter;
 
     override fun updateRecyclerView(cards: List<Card>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 }

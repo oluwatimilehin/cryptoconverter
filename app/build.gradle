@@ -82,4 +82,8 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-core-utils'
     }
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    //Loading indicator
+    compile 'com.wang.avi:library:2.1.3'
 }
