@@ -19,22 +19,32 @@ class CardsPresenter : CardsContract.Presenter {
     override fun loadCurrencies() {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
 
-        currencyDao.checkIfCurrenciesExist()
+        val currencyCheckObservable = currencyDao.checkIfCurrenciesExist()
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { currencies ->
-                            view.currenciesExist() },
-                        { e ->
-                            view.showEmptyCurrenciesError()})
+                .map { currencies ->
+                    if(currencies.isEmpty()){
+                        view.showEmptyCurrenciesError()
+                    } else{
+                        view.currenciesExist()
+                    }
 
-        disposables.add(currencyDao.getAllCurrencies()
-                .subscribeOn(scheduler)
-                .map {
-                    updateCards()
-                            .subscribe()
+                    currencyDao.getAllCurrencies()
+                            .subscribeOn(scheduler)
+                            .map {
+                                view.currenciesExist()
+                                updateCards()
+                                    .subscribe()}
                 }
-                .subscribe())
+
+
+//        disposables.add(currencyDao.getAllCurrencies()
+//                .subscribeOn(scheduler)
+//                .map {
+//                    updateCards()
+//                            .subscribe()
+//                }
+//                .subscribe())
 
         disposables.add(cryptoApi.getRates(Constants.currenciesString)
                 .subscribeOn(scheduler)
@@ -75,6 +85,7 @@ class CardsPresenter : CardsContract.Presenter {
                     run {
                         for (card in cards) {
                             currencyDao.getConversionRate(card.from, card.to)
+                                    .subscribeOn(scheduler)
                                     .subscribe({ amount ->
                                         cardDao.updateAmount(amount, card
                                                 .from, card.to)
