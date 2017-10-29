@@ -35,7 +35,7 @@ class CardsPresenter : CardsContract.Presenter {
                             .subscribeOn(scheduler)
                             .observeOn(AndroidSchedulers.mainThread())
                             .map { currencies ->
-                                if(!currencies.isEmpty()) {
+                                if (!currencies.isEmpty()) {
                                     view.currenciesExist()
                                     updateCards()
                                             .subscribe()
@@ -62,15 +62,6 @@ class CardsPresenter : CardsContract.Presenter {
                             }, { e -> e.printStackTrace() })
                 }
                 .subscribe()
-
-//        disposables.add(currencyDao.getAllCurrencies()
-//                .subscribeOn(scheduler)
-//                .map {
-//                    updateCards()
-//                            .subscribe()
-//                }
-//                .subscribe())
-
 
     }
 
