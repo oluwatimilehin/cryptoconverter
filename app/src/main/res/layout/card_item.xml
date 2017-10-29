@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="19dp"
+        android:fontFamily="@font/roboto"
         android:textAppearance="?android:textAppearanceLarge"
         android:textColor="@color/textColorPrimary"
         android:textSize="18sp"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:textColor="@color/textColorPrimary"
+        android:fontFamily="@font/roboto"
         app:layout_constraintStart_toEndOf="@+id/flagContainer"
         app:layout_constraintTop_toBottomOf="@+id/mainCurrency"
         tools:text="BTC"/>
@@ -51,6 +53,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/roboto"
         tools:text="N2,000,000"/>
 
     <TextView
@@ -61,6 +64,7 @@
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="United States Dollar"
+        android:fontFamily="@font/roboto"
         android:textColor="@color/textColorPrimary"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/amountField"/>
