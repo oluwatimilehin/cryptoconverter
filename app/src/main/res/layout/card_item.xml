@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:background="@color/colorPrimary">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/flagContainer"
+        android:layout_width="@dimen/material_list_avatar_size"
+        android:layout_height="@dimen/material_list_avatar_size"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/flag_ngn"/>
+
+    <TextView
+        android:id="@+id/mainCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="19dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/flagContainer"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="NGN"/>
+
+    <TextView
+        android:id="@+id/bitcoinCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/textColorPrimary"
+        app:layout_constraintStart_toEndOf="@+id/flagContainer"
+        app:layout_constraintTop_toBottomOf="@+id/mainCurrency"
+        tools:text="BTC"/>
+
+    <TextView
+        android:id="@+id/amountField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/material_color_white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="N2,000,000"/>
+
+    <TextView
+        android:id="@+id/currencyNameField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="United States Dollar"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/amountField"/>
+
+</android.support.constraint.ConstraintLayout>
