@@ -60,7 +60,7 @@
         app:ms_multiline="false"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/material_button_fab_edge_margin"
