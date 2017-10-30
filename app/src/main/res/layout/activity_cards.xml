@@ -36,6 +36,7 @@
         android:layout_margin="@dimen/material_button_fab_edge_margin"
         android:elevation="@dimen/material_elevation_fab_resting"
         app:layout_anchor="@id/cardsRv"
+        android:src="@drawable/ic_add_white_24dp"
         app:layout_anchorGravity="bottom|right|end"
         tools:ignore="UnusedAttribute"/>
 
