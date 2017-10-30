@@ -1,5 +1,6 @@
 package com.oluwatimilehin.cryptoconverter
 
+import com.oluwatimilehin.cryptoconverter.addcard.AddCardContract
 import com.oluwatimilehin.cryptoconverter.cards.CardsContract
 import com.oluwatimilehin.cryptoconverter.data.CardDao
 import com.oluwatimilehin.cryptoconverter.data.CurrencyDao
@@ -12,7 +13,8 @@ import io.reactivex.schedulers.Schedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 abstract class BasePresenter{
-    lateinit var view: CardsContract.View;
+    lateinit var cardsView: CardsContract.View;
+    lateinit var addCardsView: AddCardContract.View
     val disposables: CompositeDisposable = CompositeDisposable();
     val scheduler: Scheduler = Schedulers.single()
     lateinit var cardDao: CardDao
