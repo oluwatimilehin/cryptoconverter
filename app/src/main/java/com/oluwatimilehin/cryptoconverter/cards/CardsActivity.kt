@@ -2,6 +2,7 @@ package com.oluwatimilehin.cryptoconverter.cards
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
@@ -55,7 +56,10 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     lateinit var cardsPresenter: CardsContract.Presenter;
 
     override fun updateRecyclerView(cards: List<Card>) {
+        val adapter = CardsAdapter(cards)
 
+        cardsRv.adapter = adapter
+        cardsRv.layoutManager = LinearLayoutManager(this)
     }
 
 }
