@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Card
 import kotlinx.android.synthetic.main.activity_cards.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun showEmptyCurrenciesError() {
