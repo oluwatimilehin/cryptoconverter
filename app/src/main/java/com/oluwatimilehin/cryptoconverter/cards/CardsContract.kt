@@ -16,6 +16,7 @@ interface CardsContract {
         fun onDatabaseUpdateSuccess()
         fun showApiCallError()
         fun updateRecyclerView(cards: kotlin.collections.List<Card>)
+        fun showAddCard()
     }
 
     interface Presenter{
@@ -23,5 +24,6 @@ interface CardsContract {
         fun loadCards()
         fun attachView(view: CardsContract.View)
         fun onDestroy()
+        fun addNewCard()
     }
 }

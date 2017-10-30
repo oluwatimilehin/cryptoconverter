@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.oluwatimilehin.cryptoconverter.cards.CardsActivity">
 
-   <include
-       layout="@layout/toolbar"/>
+    <include
+        layout="@layout/toolbar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardsRv"
@@ -18,12 +18,13 @@
         tools:ignore="PrivateResource"/>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addCardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/material_button_fab_edge_margin"
         android:elevation="@dimen/material_elevation_fab_resting"
-        app:layout_anchor="@id/cardsRv"
         android:src="@drawable/ic_add_white_24dp"
+        app:layout_anchor="@id/cardsRv"
         app:layout_anchorGravity="bottom|right|end"
         tools:ignore="UnusedAttribute"/>
 
@@ -38,16 +39,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:indicatorColor="@color/colorAccent"
             android:visibility="invisible"
+            app:indicatorColor="@color/colorAccent"
             app:indicatorName="BallClipRotateIndicator"/>
 
         <TextView
             android:id="@+id/infoTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:textColor="@color/textColorPrimary"
+            android:visibility="gone"
             tools:layout_editor_absoluteY="331dp"/>
     </LinearLayout>
 

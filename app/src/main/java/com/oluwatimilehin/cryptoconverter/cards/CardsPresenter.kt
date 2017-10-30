@@ -15,11 +15,14 @@ import io.reactivex.schedulers.Schedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter {
+    override fun addNewCard() {
+        view.showAddCard()
+    }
 
     override fun loadCurrencies() {
         val cryptoApi: CryptoCompareService = CryptoCompareService.create()
 
-        currencyDao.checkIfCurrenciesExist()
+        disposables.add(currencyDao.checkIfCurrenciesExist()
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { currencies ->
@@ -61,7 +64,7 @@ class CardsPresenter : CardsContract.Presenter {
                                 view.onDatabaseUpdateSuccess()
                             }, { e -> e.printStackTrace() })
                 }
-                .subscribe()
+                .subscribe())
 
     }
 
