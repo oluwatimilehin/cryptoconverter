@@ -1,22 +1,23 @@
 package com.oluwatimilehin.cryptoconverter.cards
 
 import com.oluwatimilehin.cryptoconverter.App
-import com.oluwatimilehin.cryptoconverter.data.*
+import com.oluwatimilehin.cryptoconverter.BasePresenter
+import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.data.Currency
+import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 
 /**
  * Created by Oluwatimilehin on 13/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class CardsPresenter : CardsContract.Presenter {
+class CardsPresenter : CardsContract.Presenter, BasePresenter(){
     override fun addNewCard() {
-        view.showAddCard()
+        cardsView.showAddCard()
     }
 
     override fun loadCurrencies() {
@@ -27,9 +28,9 @@ class CardsPresenter : CardsContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { currencies ->
                     if (currencies.isEmpty()) {
-                        view.showEmptyCurrenciesError()
+                        cardsView.showEmptyCurrenciesError()
                     } else {
-                        view.currenciesExist()
+                        cardsView.currenciesExist()
                     }
 
                 }
@@ -39,7 +40,7 @@ class CardsPresenter : CardsContract.Presenter {
                             .observeOn(AndroidSchedulers.mainThread())
                             .map { currencies ->
                                 if (!currencies.isEmpty()) {
-                                    view.currenciesExist()
+                                    cardsView.currenciesExist()
                                     updateCards()
                                             .subscribe()
                                 }
@@ -49,7 +50,7 @@ class CardsPresenter : CardsContract.Presenter {
                 .map {
                     cryptoApi.getRates(Constants.currenciesString)
                             .subscribeOn(scheduler)
-                            .doOnError { view.showApiCallError() }
+                            .doOnError { cardsView.showApiCallError() }
                             .flatMap { rates: ExchangeRate ->
                                 val combinedList: MutableList<Currency> = ArrayList()
 
@@ -61,7 +62,7 @@ class CardsPresenter : CardsContract.Presenter {
                             .map { result -> saveDataInDb(result) }
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                view.onDatabaseUpdateSuccess()
+                                cardsView.onDatabaseUpdateSuccess()
                             }, { e -> e.printStackTrace() })
                 }
                 .subscribe())
@@ -73,9 +74,9 @@ class CardsPresenter : CardsContract.Presenter {
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ cards ->
-                    view.updateRecyclerView(cards)
+                    cardsView.updateRecyclerView(cards)
                 }, {
-                    view.showEmptyCardsError()
+                    cardsView.showEmptyCardsError()
                 }))
 
     }
@@ -94,20 +95,14 @@ class CardsPresenter : CardsContract.Presenter {
                                                 .from, card.to)
                                     }, { e -> e.printStackTrace() })
                         }
-                        view.updateRecyclerView(cards)
+                        cardsView.updateRecyclerView(cards)
                     }
                 }
-                .doOnError { view.showEmptyCardsError() }
+                .doOnError { cardsView.showEmptyCardsError() }
     }
 
-    lateinit var view: CardsContract.View;
-    val disposables: CompositeDisposable = CompositeDisposable();
-    val scheduler: Scheduler = Schedulers.single()
-    lateinit var cardDao: CardDao
-    lateinit var currencyDao: CurrencyDao
-
     override fun attachView(view: CardsContract.View) {
-        this.view = view
+        this.cardsView = view
         currencyDao = App.database.currencyDao()
         cardDao = App.database.cardDao()
 

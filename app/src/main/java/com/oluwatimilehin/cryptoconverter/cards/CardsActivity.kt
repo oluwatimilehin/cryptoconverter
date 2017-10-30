@@ -1,7 +1,9 @@
 package com.oluwatimilehin.cryptoconverter.cards
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -14,10 +16,12 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
 
-    val REQUEST_ADD_CARD = 122
+    companion object {
+        val REQUEST_ADD_CARD = 122
+    }
 
     override fun showAddCard() {
-        val intent= Intent(this, AddCard::class.java)
+        val intent = Intent(this, AddCard::class.java)
         startActivityForResult(intent, REQUEST_ADD_CARD)
     }
 
@@ -42,9 +46,13 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
         cardsPresenter = CardsPresenter()
         cardsPresenter.attachView(this)
-        cardsPresenter.loadCards()
 
         addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cardsPresenter.loadCards()
     }
 
     override fun onDestroy() {
@@ -74,4 +82,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsRv.layoutManager = LinearLayoutManager(this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_ADD_CARD && resultCode == Activity.RESULT_OK) {
+            Snackbar.make(coordinatorLayout, "Card successfully added", Snackbar.LENGTH_SHORT).show()
+        }
+    }
 }
