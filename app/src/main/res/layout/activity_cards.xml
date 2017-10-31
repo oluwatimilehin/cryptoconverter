@@ -26,6 +26,7 @@
         android:elevation="@dimen/material_elevation_fab_resting"
         android:src="@drawable/ic_add_white_24dp"
         app:layout_anchor="@id/cardsRv"
+        android:visibility="invisible"
         app:layout_anchorGravity="bottom|right|end"
         tools:ignore="UnusedAttribute"/>
 

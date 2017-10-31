@@ -72,9 +72,11 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ cards ->
-                    cardsView.updateRecyclerView(cards)
-                }, {
-                    cardsView.showEmptyCardsError()
+                    if(!cards.isEmpty()) {
+                        cardsView.updateRecyclerView(cards)
+                    } else{
+                        cardsView.showEmptyCardsError()
+                    }
                 }))
 
     }
@@ -124,15 +126,19 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { cards ->
                     run {
-                        for (card in cards) {
-                            currencyDao.getConversionRate(card.from, card.to)
-                                    .subscribeOn(scheduler)
-                                    .subscribe({ amount ->
-                                        cardDao.updateAmount(amount, card
-                                                .from, card.to)
-                                    }, { e -> e.printStackTrace() })
+                        if(!cards.isEmpty()) {
+                            for (card in cards) {
+                                currencyDao.getConversionRate(card.from, card.to)
+                                        .subscribeOn(scheduler)
+                                        .subscribe({ amount ->
+                                            cardDao.updateAmount(amount, card
+                                                    .from, card.to)
+                                        }, { e -> e.printStackTrace() })
+                            }
+                            cardsView.updateRecyclerView(cards)
+                        }else{
+                            cardsView.showEmptyCardsError()
                         }
-                        cardsView.updateRecyclerView(cards)
                     }
                 }
                 .doOnError { cardsView.showEmptyCardsError() }

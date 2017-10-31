@@ -45,6 +45,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun currenciesExist() {
         loadingIndicator.hide()
         infoTV.visibility = View.GONE
+        addCardButton.visibility = View.VISIBLE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,15 +90,21 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
 
     override fun showEmptyCardsError() {
-
+        infoTV.text = getString(R.string.no_cards_message)
+        infoTV.visibility = View.VISIBLE
     }
 
     override fun showApiCallError() {
+        Snackbar.make(coordinatorLayout, "Unable to load new data", Snackbar.LENGTH_SHORT).show()
+        loadingIndicator.visibility = View.GONE
 
+        if(infoTV.visibility == View.VISIBLE){
+            infoTV.text = getString(R.string.internet_error)
+        }
     }
 
     override fun onDatabaseUpdateSuccess() {
-        Toast.makeText(this, "Database updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Data has been updated", Toast.LENGTH_SHORT).show();
     }
 
     lateinit var cardsPresenter: CardsContract.Presenter;
