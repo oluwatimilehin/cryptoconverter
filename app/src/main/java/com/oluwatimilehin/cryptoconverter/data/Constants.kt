@@ -43,7 +43,7 @@ class Constants{
 
 
             while (index < 24){
-                if(currencies[index].name != "BMD" && currencies[index].name != "BZD" ) //These
+                if(currencies[index].code != "BMD" && currencies[index].code != "BZD" ) //These
                 // are the currencies that there is no data for
                 currencyNames.add(currencies[index].name)
 
