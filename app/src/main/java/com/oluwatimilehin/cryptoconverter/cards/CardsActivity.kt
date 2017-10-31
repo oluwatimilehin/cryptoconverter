@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
@@ -17,7 +18,12 @@ import com.oluwatimilehin.cryptoconverter.data.Card
 import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
 
+
+
 class CardsActivity : AppCompatActivity(), CardsContract.View {
+    override fun showCardDeleted() {
+        Snackbar.make(coordinatorLayout, "Card deleted", Snackbar.LENGTH_SHORT).show()
+    }
 
     companion object {
         val REQUEST_ADD_CARD = 122
@@ -48,7 +54,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
         cardsPresenter = CardsPresenter()
-        cardsPresenter.attachView(this)
 
         addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
 
@@ -72,6 +77,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onResume() {
         super.onResume()
+
+        cardsPresenter.attachView(this)
         cardsPresenter.loadCards()
     }
 
@@ -104,6 +111,24 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsRv.adapter = adapter
         cardsRv.layoutManager = LinearLayoutManager(this)
         cardsRv.addItemDecoration(dividerItemDecoration)
+
+        val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
+            override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                return makeMovementFlags(0, swipeFlags)
+            }
+
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                val card = cards[viewHolder?.adapterPosition!!]
+                cardsPresenter.deleteCard(card)
+                adapter.notifyItemChanged(viewHolder.adapterPosition)
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(cardsRv)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
