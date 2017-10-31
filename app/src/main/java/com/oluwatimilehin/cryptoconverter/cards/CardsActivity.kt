@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
@@ -77,9 +78,12 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun updateRecyclerView(cards: List<Card>) {
         val adapter = CardsAdapter(cards)
+        val dividerItemDecoration = DividerItemDecoration(cardsRv.context,
+                LinearLayoutManager(this).orientation )
 
         cardsRv.adapter = adapter
         cardsRv.layoutManager = LinearLayoutManager(this)
+        cardsRv.addItemDecoration(dividerItemDecoration)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
