@@ -7,6 +7,7 @@ import com.oluwatimilehin.cryptoconverter.data.Constants
 import com.oluwatimilehin.cryptoconverter.data.Currency
 import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -16,6 +17,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter, BasePresenter(){
+    override fun deleteCard(card: Card) {
+        Completable.fromAction {cardDao.deleteCard(card.from, card.to)}
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    cardsView.showCardDeleted()
+                    loadCards()
+                })
+    }
+
     override fun addNewCard() {
         cardsView.showAddCard()
     }
