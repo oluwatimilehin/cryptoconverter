@@ -42,8 +42,11 @@ class Constants{
             var index = 0
 
 
-            while (index < 23){
+            while (index < 24){
+                if(currencies[index].name != "BMD" && currencies[index].name != "BZD" ) //These
+                // are the currencies that there is no data for
                 currencyNames.add(currencies[index].name)
+
                 index++
             }
 
