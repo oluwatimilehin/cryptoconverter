@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
@@ -49,6 +50,23 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsPresenter.attachView(this)
 
         addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
+
+        //hide the FAB when the list is scrolled
+        cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(dy > 0 || dy < 0 && addCardButton.isShown){
+                    addCardButton.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+
+                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                    addCardButton.show()
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        } )
     }
 
     override fun onResume() {
