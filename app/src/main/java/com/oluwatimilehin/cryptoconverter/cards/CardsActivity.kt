@@ -46,7 +46,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun currenciesExist() {
         loadingIndicator.hide()
-        infoTV.visibility = View.INVISIBLE
+        if(infoTV.text != getString(R.string.no_cards_message)) {
+            infoTV.visibility = View.INVISIBLE
+        }
         addCardButton.visibility = View.VISIBLE
     }
 
