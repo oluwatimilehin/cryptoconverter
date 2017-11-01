@@ -46,6 +46,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun currenciesExist() {
         loadingIndicator.hide()
+        infoTV.visibility = View.INVISIBLE
         addCardButton.visibility = View.VISIBLE
     }
 
@@ -124,8 +125,11 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
 
     override fun showEmptyCardsError() {
-        infoTV.visibility = View.VISIBLE
-        infoTV.text = getString(R.string.no_cards_message)
+
+        if(infoTV.visibility != View.VISIBLE) {
+            infoTV.visibility = View.VISIBLE
+            infoTV.text = getString(R.string.no_cards_message)
+        }
     }
 
     override fun showApiCallError() {
@@ -145,7 +149,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun updateRecyclerView(cards: List<Card>) {
         adapter.updateList(cards)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
