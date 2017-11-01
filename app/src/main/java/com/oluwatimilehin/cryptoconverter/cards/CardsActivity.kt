@@ -89,8 +89,13 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
 
-    override fun showEmptyCardsError() {
-        infoTV.text = getString(R.string.no_cards_message)
+    override fun showEmptyCardsError(currenciesExist: Boolean) {
+
+        when(currenciesExist){
+            true -> {
+                infoTV.text = getString(R.string.no_cards_message)
+            }
+        }
         infoTV.visibility = View.VISIBLE
     }
 
@@ -132,7 +137,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
                 val card = cards[viewHolder?.adapterPosition!!]
                 cardsPresenter.deleteCard(card)
-                adapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         })
         itemTouchHelper.attachToRecyclerView(cardsRv)

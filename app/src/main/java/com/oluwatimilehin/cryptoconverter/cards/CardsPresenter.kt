@@ -75,7 +75,7 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                     if(!cards.isEmpty()) {
                         cardsView.updateRecyclerView(cards)
                     } else{
-                        cardsView.showEmptyCardsError()
+                        cardsView.showEmptyCardsError(false)
                     }
                 }))
 
@@ -137,11 +137,11 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                             }
                             cardsView.updateRecyclerView(cards)
                         }else{
-                            cardsView.showEmptyCardsError()
+                            cardsView.showEmptyCardsError(true)
                         }
                     }
                 }
-                .doOnError { cardsView.showEmptyCardsError() }
+                .doOnError { cardsView.showEmptyCardsError(true) }
     }
 
     override fun attachView(view: CardsContract.View) {
