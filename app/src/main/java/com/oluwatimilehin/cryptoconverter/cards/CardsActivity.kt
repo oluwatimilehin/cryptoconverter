@@ -83,7 +83,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         val cards: List<Card> = ArrayList()
         adapter = CardsAdapter(cards)
 
-        val dividerItemDecoration = DividerItemDecoration(cardsRv.context,
+        dividerItemDecoration = DividerItemDecoration(cardsRv.context,
                 LinearLayoutManager(this).orientation)
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.card_divider))
 
@@ -110,10 +110,10 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
     lateinit var adapter: CardsAdapter
+    lateinit var dividerItemDecoration: DividerItemDecoration
 
     override fun onResume() {
         super.onResume()
-
         cardsPresenter.attachView(this)
         cardsPresenter.loadCards()
     }
@@ -129,6 +129,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         if(infoTV.visibility != View.VISIBLE) {
             infoTV.visibility = View.VISIBLE
             infoTV.text = getString(R.string.no_cards_message)
+            cardsRv.removeItemDecoration(dividerItemDecoration)
         }
     }
 
@@ -153,7 +154,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_ADD_CARD && resultCode == Activity.RESULT_OK) {
-            Snackbar.make(coordinatorLayout, "Card successfully added", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(coordinatorLayout, "Card added successfully", Snackbar.LENGTH_SHORT)
+                    .show()
         }
     }
 }
