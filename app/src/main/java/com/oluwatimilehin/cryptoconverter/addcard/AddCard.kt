@@ -15,7 +15,7 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
     lateinit var addCardPresenter: AddCardPresenter
 
     override fun cardExistsError() {
-        runOnUiThread(Runnable {
+        runOnUiThread({
             Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
                     .show()
         })
@@ -24,7 +24,7 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
 
     override fun saveCardSuccess() {
 
-        runOnUiThread(Runnable {
+        runOnUiThread({
             setResult(Activity.RESULT_OK)
             finish()
         })

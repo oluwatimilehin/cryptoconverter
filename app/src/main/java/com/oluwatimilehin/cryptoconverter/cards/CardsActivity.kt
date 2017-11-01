@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
-import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
 import com.oluwatimilehin.cryptoconverter.data.Card
@@ -19,8 +18,11 @@ import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-
 class CardsActivity : AppCompatActivity(), CardsContract.View {
+    override fun cardsExist() {
+        infoTV.visibility = View.GONE
+    }
+
     override fun showCardDeleted() {
         Snackbar.make(coordinatorLayout, "Card deleted", Snackbar.LENGTH_SHORT).show()
     }
@@ -44,7 +46,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun currenciesExist() {
         loadingIndicator.hide()
-        infoTV.visibility = View.GONE
         addCardButton.visibility = View.VISIBLE
     }
 
@@ -61,20 +62,53 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         //hide the FAB when the list is scrolled
         cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if(dy > 0 || dy < 0 && addCardButton.isShown){
+                if (dy > 0 || dy < 0 && addCardButton.isShown) {
                     addCardButton.hide()
                 }
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
 
-                if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     addCardButton.show()
                 }
                 super.onScrollStateChanged(recyclerView, newState)
             }
-        } )
+        })
+        setUpRecyclerView()
     }
+
+    private fun setUpRecyclerView() {
+        val cards: List<Card> = ArrayList()
+        adapter = CardsAdapter(cards)
+
+        val dividerItemDecoration = DividerItemDecoration(cardsRv.context,
+                LinearLayoutManager(this).orientation)
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.card_divider))
+
+        cardsRv.adapter = adapter
+        cardsRv.layoutManager = LinearLayoutManager(this)
+        cardsRv.addItemDecoration(dividerItemDecoration)
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                return makeMovementFlags(0, swipeFlags)
+            }
+
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                val card = adapter.cards[viewHolder?.adapterPosition!!]
+                cardsPresenter.deleteCard(card)
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(cardsRv)
+    }
+
+    lateinit var adapter: CardsAdapter
 
     override fun onResume() {
         super.onResume()
@@ -89,57 +123,29 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
 
-    override fun showEmptyCardsError(currenciesExist: Boolean) {
-
-        when(currenciesExist){
-            true -> {
-                infoTV.text = getString(R.string.no_cards_message)
-            }
-        }
+    override fun showEmptyCardsError() {
         infoTV.visibility = View.VISIBLE
+        infoTV.text = getString(R.string.no_cards_message)
     }
 
     override fun showApiCallError() {
         Snackbar.make(coordinatorLayout, "Unable to load new data", Snackbar.LENGTH_SHORT).show()
         loadingIndicator.visibility = View.GONE
 
-        if(infoTV.visibility == View.VISIBLE){
+        if (infoTV.visibility == View.VISIBLE) {
             infoTV.text = getString(R.string.internet_error)
         }
     }
 
     override fun onDatabaseUpdateSuccess() {
-        Toast.makeText(this, "Data has been updated", Toast.LENGTH_SHORT).show();
+
     }
 
     lateinit var cardsPresenter: CardsContract.Presenter;
 
     override fun updateRecyclerView(cards: List<Card>) {
-        val adapter = CardsAdapter(cards)
-        val dividerItemDecoration = DividerItemDecoration(cardsRv.context,
-                LinearLayoutManager(this).orientation )
-        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.card_divider))
+        adapter.updateList(cards)
 
-        cardsRv.adapter = adapter
-        cardsRv.layoutManager = LinearLayoutManager(this)
-        cardsRv.addItemDecoration(dividerItemDecoration)
-
-        val itemTouchHelper = ItemTouchHelper(object: ItemTouchHelper.Callback(){
-            override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
-                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-                return makeMovementFlags(0, swipeFlags)
-            }
-
-            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                val card = cards[viewHolder?.adapterPosition!!]
-                cardsPresenter.deleteCard(card)
-            }
-        })
-        itemTouchHelper.attachToRecyclerView(cardsRv)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

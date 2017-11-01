@@ -72,13 +72,14 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ cards ->
-                    if(!cards.isEmpty()) {
+                    if (!cards.isEmpty()) {
+                        cardsView.cardsExist()
                         cardsView.updateRecyclerView(cards)
-                    } else{
-                        cardsView.showEmptyCardsError(false)
+                    } else {
+                        cardsView.showEmptyCardsError()
                     }
-                }))
 
+                }))
     }
 
     /**
@@ -136,12 +137,12 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                                         }, { e -> e.printStackTrace() })
                             }
                             cardsView.updateRecyclerView(cards)
-                        }else{
-                            cardsView.showEmptyCardsError(true)
+                        } else{
+                            cardsView.showEmptyCardsError()
                         }
                     }
                 }
-                .doOnError { cardsView.showEmptyCardsError(true) }
+                .doOnError { e -> e.printStackTrace() }
     }
 
     override fun attachView(view: CardsContract.View) {

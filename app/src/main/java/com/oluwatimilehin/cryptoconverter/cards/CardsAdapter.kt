@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.card_item.view.*
  * oluwatimilehinadeniran@gmail.com.
  */
 
-class CardsAdapter(val cards: List<Card>) : RecyclerView.Adapter<CardsAdapter
+class CardsAdapter(var cards: List<Card>) : RecyclerView.Adapter<CardsAdapter
 .ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.card_item,
@@ -44,8 +44,11 @@ class CardsAdapter(val cards: List<Card>) : RecyclerView.Adapter<CardsAdapter
                 itemView.bitcoinCurrency.text = card.from
                 itemView.amountField.text = card.amount.toString()
                 itemView.currencyNameField.text = card.currencyName
-
-
             }
       }
+
+    fun updateList(cards: List<Card>){
+        this.cards = cards
+        notifyDataSetChanged()
+    }
 }

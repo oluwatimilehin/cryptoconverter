@@ -10,7 +10,7 @@ import com.oluwatimilehin.cryptoconverter.data.Card
 interface CardsContract {
 
     interface View{
-        fun showEmptyCardsError(currenciesExist: Boolean)
+        fun showEmptyCardsError()
         fun showEmptyCurrenciesError()
         fun currenciesExist()
         fun onDatabaseUpdateSuccess()
@@ -18,6 +18,7 @@ interface CardsContract {
         fun updateRecyclerView(cards: kotlin.collections.List<Card>)
         fun showAddCard()
         fun showCardDeleted()
+        fun cardsExist()
     }
 
     interface Presenter{
