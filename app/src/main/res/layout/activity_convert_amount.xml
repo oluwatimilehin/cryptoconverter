@@ -7,4 +7,56 @@
     android:layout_height="match_parent"
     tools:context="com.oluwatimilehin.cryptoconverter.currencyconversion.ConvertAmountActivity">
 
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/fromLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="148dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="33sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="BTC"/>
+
+    <EditText
+        android:id="@+id/fromField"
+        style="@style/ConversionField"
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:layout_marginTop="128dp"
+        android:labelFor="@id/fromLabel"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/fromLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="1.00"/>
+
+    <TextView
+        android:id="@+id/toLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="92dp"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="33sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fromLabel"
+        tools:text="NGN"/>
+
+    <EditText
+        android:id="@+id/toField"
+        style="@style/ConversionField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/toLabel"
+        app:layout_constraintTop_toBottomOf="@+id/fromField"
+        tools:text="200000000.223"/>
+
+
 </android.support.constraint.ConstraintLayout>

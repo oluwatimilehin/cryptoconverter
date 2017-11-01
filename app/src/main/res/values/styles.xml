@@ -11,4 +11,16 @@
     </style>
 
 
+    <style name="ConversionField">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:ems">7</item>
+        <item name="android:inputType">number</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textColor">@color/material_color_white</item>
+        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:textSize">33sp</item>
+    </style>
+
+
 </resources>

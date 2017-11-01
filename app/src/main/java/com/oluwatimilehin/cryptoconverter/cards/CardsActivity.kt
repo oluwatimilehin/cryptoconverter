@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun cardsExist() {
         infoTV.visibility = View.GONE
+        cardsRv.addItemDecoration(dividerItemDecoration)
     }
 
     override fun showCardDeleted() {
@@ -91,7 +92,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
         cardsRv.adapter = adapter
         cardsRv.layoutManager = LinearLayoutManager(this)
-        cardsRv.addItemDecoration(dividerItemDecoration)
+
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
