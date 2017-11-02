@@ -17,8 +17,8 @@
         <item name="android:ems">7</item>
         <item name="android:inputType">number</item>
         <item name="android:textAlignment">textEnd</item>
-        <item name="android:textColor">@color/material_color_white</item>
-        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/material_color_white_30_percent</item>
         <item name="android:textSize">33sp</item>
     </style>
 

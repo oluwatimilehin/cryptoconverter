@@ -33,7 +33,7 @@
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintStart_toEndOf="@+id/fromLabel"
         app:layout_constraintTop_toTopOf="parent"
-        tools:hint="1.00"/>
+        android:hint="@string/from_hint"/>
 
     <TextView
         android:id="@+id/toLabel"
