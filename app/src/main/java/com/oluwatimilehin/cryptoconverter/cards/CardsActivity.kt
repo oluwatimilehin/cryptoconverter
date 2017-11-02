@@ -19,39 +19,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
-    override fun cardsExist() {
-        infoTV.visibility = View.GONE
-        cardsRv.addItemDecoration(dividerItemDecoration)
-    }
-
-    override fun showCardDeleted() {
-        Snackbar.make(coordinatorLayout, "Card deleted", Snackbar.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        val REQUEST_ADD_CARD = 122
-    }
-
-    override fun showAddCard() {
-        val intent = Intent(this, AddCard::class.java)
-        startActivityForResult(intent, REQUEST_ADD_CARD)
-    }
-
-    override fun showEmptyCurrenciesError() {
-        loadingIndicator.visibility = View.VISIBLE
-        loadingIndicator.show()
-        infoTV.text = getString(R.string.loading_data)
-        infoTV.visibility = View.VISIBLE
-
-    }
-
-    override fun currenciesExist() {
-        loadingIndicator.hide()
-        if(infoTV.text != getString(R.string.no_cards_message)) {
-            infoTV.visibility = View.INVISIBLE
-        }
-        addCardButton.visibility = View.VISIBLE
-    }
+    lateinit var adapter: CardsAdapter
+    lateinit var dividerItemDecoration: DividerItemDecoration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +49,40 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
         })
         setUpRecyclerView()
+    }
+
+    override fun cardsExist() {
+        infoTV.visibility = View.GONE
+        cardsRv.addItemDecoration(dividerItemDecoration)
+    }
+
+    override fun showCardDeleted() {
+        Snackbar.make(coordinatorLayout, "Card deleted", Snackbar.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        val REQUEST_ADD_CARD = 122
+    }
+
+    override fun showAddCard() {
+        val intent = Intent(this, AddCard::class.java)
+        startActivityForResult(intent, REQUEST_ADD_CARD)
+    }
+
+    override fun showEmptyCurrenciesError() {
+        loadingIndicator.visibility = View.VISIBLE
+        loadingIndicator.show()
+        infoTV.text = getString(R.string.loading_data)
+        infoTV.visibility = View.VISIBLE
+
+    }
+
+    override fun currenciesExist() {
+        loadingIndicator.hide()
+        if (infoTV.text != getString(R.string.no_cards_message)) {
+            infoTV.visibility = View.INVISIBLE
+        }
+        addCardButton.visibility = View.VISIBLE
     }
 
     private fun setUpRecyclerView() {
@@ -112,9 +115,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         itemTouchHelper.attachToRecyclerView(cardsRv)
     }
 
-    lateinit var adapter: CardsAdapter
-    lateinit var dividerItemDecoration: DividerItemDecoration
-
     override fun onResume() {
         super.onResume()
         cardsPresenter.attachView(this)
@@ -129,7 +129,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun showEmptyCardsError() {
 
-        if(infoTV.visibility != View.VISIBLE) {
+        if (infoTV.visibility != View.VISIBLE) {
             infoTV.visibility = View.VISIBLE
             infoTV.text = getString(R.string.no_cards_message)
             cardsRv.removeItemDecoration(dividerItemDecoration)
