@@ -13,7 +13,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
-import com.oluwatimilehin.cryptoconverter.currencyconversion.ConvertAmountActivity
+import com.oluwatimilehin.cryptoconverter.currencyconversion.ConversionActivity
 import com.oluwatimilehin.cryptoconverter.data.Card
 import com.oluwatimilehin.cryptoconverter.data.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun showConversionScreen(from: String, to: String, amount: Double) {
-        val intent = Intent(this, ConvertAmountActivity::class.java)
+        val intent = Intent(this, ConversionActivity::class.java)
         val bundle = Bundle()
         bundle.putString(Constants.KEY_FROM, from)
         bundle.putString(Constants.KEY_TO, to)
