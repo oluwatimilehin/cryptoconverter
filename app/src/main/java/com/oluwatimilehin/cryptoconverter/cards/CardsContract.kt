@@ -25,7 +25,7 @@ interface CardsContract {
         fun loadCurrencies()
         fun loadCards()
         fun attachView(view: CardsContract.View)
-        fun onDestroy()
+        fun clearDisposables()
         fun addNewCard()
         fun deleteCard(card: Card)
     }

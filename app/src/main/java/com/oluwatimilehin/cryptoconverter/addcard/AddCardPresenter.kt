@@ -11,8 +11,8 @@ import com.oluwatimilehin.cryptoconverter.data.Card
  * oluwatimilehinadeniran@gmail.com.
  */
 class AddCardPresenter : AddCardContract.Presenter, BasePresenter(){
-    override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun clearDisposables() {
+        disposables.clear()
     }
 
     override fun attachView(view: AddCardContract.View) {

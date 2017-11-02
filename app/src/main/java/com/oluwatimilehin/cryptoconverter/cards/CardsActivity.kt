@@ -123,7 +123,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        cardsPresenter.onDestroy()
+        cardsPresenter.clearDisposables()
     }
 
 

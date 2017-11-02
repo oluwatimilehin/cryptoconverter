@@ -13,6 +13,6 @@ interface AddCardContract{
     interface Presenter{
         fun saveCard(from: String, to: String)
         fun attachView(view: AddCardContract.View)
-        fun onDestroy()
+        fun clearDisposables()
     }
 }

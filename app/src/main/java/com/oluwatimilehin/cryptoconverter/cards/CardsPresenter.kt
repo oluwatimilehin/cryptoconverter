@@ -154,7 +154,7 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
     }
 
 
-    override fun onDestroy() {
+    override fun clearDisposables() {
         disposables.clear()
     }
 
