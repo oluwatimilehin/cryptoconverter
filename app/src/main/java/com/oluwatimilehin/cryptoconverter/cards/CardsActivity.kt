@@ -13,12 +13,25 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
+import com.oluwatimilehin.cryptoconverter.currencyconversion.ConvertAmountActivity
 import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
+    override fun showConversionScreen(from: String, to: String, amount: Double) {
+        val intent = Intent(this, ConvertAmountActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString(Constants.KEY_FROM, from)
+        bundle.putString(Constants.KEY_TO, to)
+        bundle.putDouble(Constants.KEY_AMOUNT, amount)
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+    }
+
     lateinit var adapter: CardsAdapter
     lateinit var dividerItemDecoration: DividerItemDecoration
 
@@ -96,6 +109,12 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsRv.adapter = adapter
         cardsRv.layoutManager = LinearLayoutManager(this)
 
+        adapter.setClickListener(object : CardsAdapter.CardClickListener {
+            override fun onItemClicked(position: Int) {
+                val currentCard = adapter.cards[position]
+                cardsPresenter.loadDetails(currentCard)
+            }
+        })
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {

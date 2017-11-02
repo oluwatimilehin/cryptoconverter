@@ -17,6 +17,11 @@ import kotlinx.android.synthetic.main.card_item.view.*
 
 class CardsAdapter(var cards: List<Card>) : RecyclerView.Adapter<CardsAdapter
 .ViewHolder>() {
+
+    companion object {
+        lateinit var cardClickListener: CardClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.card_item,
                 parent, false)
@@ -24,31 +29,44 @@ class CardsAdapter(var cards: List<Card>) : RecyclerView.Adapter<CardsAdapter
         return ViewHolder(inflatedView)
     }
 
+    fun setClickListener(listener: CardClickListener) {
+        cardClickListener = listener
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       val card = cards[position]
+        val card = cards[position]
         holder.bindItems(card)
     }
 
     override fun getItemCount(): Int {
-       return cards.size
+        return cards.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            fun bindItems(card: Card){
-                Glide.with(itemView.context)
-                        .load("")
-                        .apply(RequestOptions().placeholder(card.flag))
-                        .into(itemView.flagContainer)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        override fun onClick(v: View) {
+            cardClickListener.onItemClicked(adapterPosition)
+        }
 
-                itemView.mainCurrency.text = card.to
-                itemView.bitcoinCurrency.text = card.from
-                itemView.amountField.text = card.amount.toString()
-                itemView.currencyNameField.text = card.currencyName
-            }
-      }
+        fun bindItems(card: Card) {
+            Glide.with(itemView.context)
+                    .load("")
+                    .apply(RequestOptions().placeholder(card.flag))
+                    .into(itemView.flagContainer)
 
-    fun updateList(cards: List<Card>){
+            itemView.setOnClickListener(this)
+            itemView.mainCurrency.text = card.to
+            itemView.bitcoinCurrency.text = card.from
+            itemView.amountField.text = card.amount.toString()
+            itemView.currencyNameField.text = card.currencyName
+        }
+    }
+
+    fun updateList(cards: List<Card>) {
         this.cards = cards
         notifyDataSetChanged()
+    }
+
+    interface CardClickListener {
+        fun onItemClicked(position: Int)
     }
 }

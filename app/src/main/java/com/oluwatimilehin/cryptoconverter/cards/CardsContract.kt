@@ -19,6 +19,7 @@ interface CardsContract {
         fun showAddCard()
         fun showCardDeleted()
         fun cardsExist()
+        fun showConversionScreen(from: String, to: String, amount: Double)
     }
 
     interface Presenter{
@@ -28,5 +29,6 @@ interface CardsContract {
         fun clearDisposables()
         fun addNewCard()
         fun deleteCard(card: Card)
+        fun loadDetails(card: Card)
     }
 }

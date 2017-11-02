@@ -18,6 +18,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter, BasePresenter() {
+    override fun loadDetails(card: Card) {
+        val from = card.from
+        val to = card.to
+        val amount = card.amount
+
+        cardsView.showConversionScreen(from, to, amount)
+    }
 
     override fun deleteCard(card: Card) {
         disposables.add(Completable.fromAction { cardDao.deleteCard(card.from, card.to) }
