@@ -10,6 +10,11 @@ import com.mynameismidori.currencypicker.ExtendedCurrency
 class Constants{
 
     companion object {
+
+        val KEY_FROM = "from"
+        val KEY_TO = "to"
+        val KEY_AMOUNT = "amount"
+
         val listOfCurrencies: List<String> = listOf("EUR",
                 "USD",
                 "GBP",
