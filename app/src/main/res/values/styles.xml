@@ -11,7 +11,7 @@
     </style>
 
 
-    <style name="ConversionField">
+    <style name="ConversionFieldLarge">
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:inputType">numberDecimal</item>
@@ -19,6 +19,17 @@
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textColorHint">@color/material_color_white_30_percent</item>
         <item name="android:textSize">33sp</item>
+        <item name="android:ems">7</item>
+    </style>
+
+    <style name="ConversionField">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/material_color_white_30_percent</item>
+        <item name="android:textSize">27sp</item>
         <item name="android:ems">7</item>
     </style>
 
