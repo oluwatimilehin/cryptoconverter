@@ -1,5 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.currencyconversion
 
+import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
@@ -11,20 +12,20 @@ import java.util.*
 class ConversionPresenter : ConversionContract.Presenter {
     override fun attachView(view: ConversionContract.View, rate: Double) {
         this.view = view
-        this.rate = rate
+        this.rate = BigDecimal.valueOf(rate)
     }
 
-    var rate: Double = 0.0
+    private lateinit var rate: BigDecimal;
     lateinit var view: ConversionContract.View
-    private val formatter = DecimalFormat("#,###,###")
+    private val formatter = DecimalFormat("#,###,###.###")
 
     override fun convertAmount(input: String, conversion: String) {
-        var amount: Double
+        var amount: BigDecimal
         amount = try {
-            input.toDouble()
+            BigDecimal(input)
         } catch (e: NumberFormatException) {
             val numberFormat = NumberFormat.getNumberInstance(Locale.ENGLISH)
-            numberFormat.parse(input).toDouble()
+            BigDecimal(numberFormat.parse(input).toString())
         }
 
         when (conversion) {
