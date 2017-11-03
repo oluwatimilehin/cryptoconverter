@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oluwatimilehin.cryptoconverter.currencyconversion.ConvertAmountActivity">
+    tools:context="com.oluwatimilehin.cryptoconverter.currencyconversion.ConversionActivity">
 
     <include
         android:id="@+id/layout_toolbar"
@@ -27,13 +27,15 @@
         android:id="@+id/fromField"
         style="@style/ConversionField"
         android:layout_width="wrap_content"
-        android:layout_height="67dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
         android:layout_marginTop="128dp"
+        android:hint="@string/from_hint"
         android:labelFor="@id/fromLabel"
         app:backgroundTint="@color/colorAccent"
+        android:maxLength="8"
         app:layout_constraintStart_toEndOf="@+id/fromLabel"
-        app:layout_constraintTop_toTopOf="parent"
-        android:hint="@string/from_hint"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/toLabel"
@@ -52,8 +54,10 @@
         style="@style/ConversionField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="72dp"
         app:backgroundTint="@color/colorAccent"
+        app:autoSizeTextType="uniform"
         app:layout_constraintStart_toEndOf="@+id/toLabel"
         app:layout_constraintTop_toBottomOf="@+id/fromField"
         tools:text="200000000.223"/>
