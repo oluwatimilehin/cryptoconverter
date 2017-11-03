@@ -5,10 +5,23 @@ import android.support.v7.app.AppCompatActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Constants
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_convert_amount.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class ConversionActivity : AppCompatActivity() {
+class ConversionActivity : AppCompatActivity(), ConversionContract.View {
+    override fun showAmount(amount: String, conversion: String) {
+            when(conversion){
+                "from" -> {
+                    toField.setText(amount)
+                }
+                "to" -> {
+                    fromField.setText(amount)
+                }
+            }
+    }
+
+    private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,19 +32,43 @@ class ConversionActivity : AppCompatActivity() {
         supportActionBar?.title = "Convert Amount"
 
         val bundle = intent.extras
+        val rate = bundle.getDouble(Constants.KEY_AMOUNT)
 
         fromLabel.text = bundle.getString(Constants.KEY_FROM)
         toLabel.text = bundle.getString(Constants.KEY_TO)
-        toField.hint = bundle.getDouble(Constants.KEY_AMOUNT).toString()
+        toField.hint = rate.toString()
 
-        RxTextView.textChanges(fromField)
-                .filter{s -> s.isNotEmpty() }
-                .subscribe({
-                    s -> run{
-                    var amount: Double = s.toString().toDouble()
-                    amount *= bundle.getDouble(Constants.KEY_AMOUNT)
-                    toField.setText(amount.toString())
-                }
-                })
+        val presenter = ConversionPresenter()
+        presenter.attachView(this, rate)
+
+        disposables.add(RxTextView.textChanges(fromField)
+                .filter { fromField.hasFocus() }
+                .subscribe({ s ->
+                    run {
+                        if (s.isNotEmpty()) {
+                            presenter.convertAmount(s.toString(), "from")
+                        } else {
+                            toField.setText("")
+                        }
+                    }
+                }))
+
+
+        disposables.add(RxTextView.textChanges(toField)
+                .filter { toField.hasFocus() }
+                .subscribe({ s ->
+                    run {
+                        if (s.isNotEmpty()) {
+                            presenter.convertAmount(s.toString(), "to")
+                        } else {
+                            fromField.setText("")
+                        }
+                    }
+                }))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 }
