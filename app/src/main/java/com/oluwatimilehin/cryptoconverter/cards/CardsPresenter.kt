@@ -52,8 +52,8 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
 
     override fun loadCurrencies(connected: Boolean) {
 
-        if(!connected){
-           cardsView.showApiCallError()
+        if (!connected) {
+            cardsView.showApiCallError()
             return
         }
 
