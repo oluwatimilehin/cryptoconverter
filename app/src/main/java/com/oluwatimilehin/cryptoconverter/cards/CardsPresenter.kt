@@ -18,6 +18,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsPresenter : CardsContract.Presenter, BasePresenter() {
+
+    override fun attachView(view: CardsContract.View, connected: Boolean) {
+        this.cardsView = view
+        currencyDao = App.database.currencyDao()
+        cardDao = App.database.cardDao()
+
+        loadCurrencies(connected)
+    }
+
+
     override fun loadDetails(card: Card) {
         val from = card.from
         val to = card.to
@@ -158,15 +168,6 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 }
                 .doOnError { e -> e.printStackTrace() }
     }
-
-    override fun attachView(view: CardsContract.View, connected: Boolean) {
-        this.cardsView = view
-        currencyDao = App.database.currencyDao()
-        cardDao = App.database.cardDao()
-
-        loadCurrencies(connected)
-    }
-
 
     override fun clearDisposables() {
         disposables.clear()

@@ -10,17 +10,6 @@ import kotlinx.android.synthetic.main.activity_convert_amount.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class ConversionActivity : AppCompatActivity(), ConversionContract.View {
-    override fun showAmount(amount: String, conversion: String) {
-            when(conversion){
-                "from" -> {
-                    toField.setText(amount)
-                }
-                "to" -> {
-                    fromField.setText(amount)
-                }
-            }
-    }
-
     private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,5 +59,16 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
     override fun onDestroy() {
         super.onDestroy()
         disposables.clear()
+    }
+
+    override fun showAmount(amount: String, conversion: String) {
+        when(conversion){
+            "from" -> {
+                toField.setText(amount)
+            }
+            "to" -> {
+                fromField.setText(amount)
+            }
+        }
     }
 }
