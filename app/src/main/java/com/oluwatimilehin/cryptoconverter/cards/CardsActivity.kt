@@ -73,6 +73,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun cardsExist() {
         infoTV.visibility = View.GONE
+        cardsRv.visibility = View.VISIBLE
         cardsRv.addItemDecoration(dividerItemDecoration)
     }
 
@@ -165,11 +166,10 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
 
     override fun showEmptyCardsError() {
-
+        cardsRv.visibility = View.GONE
         if (infoTV.visibility != View.VISIBLE) {
             infoTV.visibility = View.VISIBLE
             infoTV.text = getString(R.string.no_cards_message)
-            cardsRv.removeItemDecoration(dividerItemDecoration)
         }
     }
 
