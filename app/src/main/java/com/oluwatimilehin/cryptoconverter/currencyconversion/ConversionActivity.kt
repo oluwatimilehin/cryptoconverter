@@ -2,6 +2,7 @@ package com.oluwatimilehin.cryptoconverter.currencyconversion
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.data.Constants
@@ -41,7 +42,7 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
                             toField.setText("")
                         }
                     }
-                }))
+                },{ Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();}))
 
         disposables.add(RxTextView.textChanges(toField)
                 .filter { toField.hasFocus() }
@@ -53,7 +54,7 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
                             fromField.setText("")
                         }
                     }
-                }))
+                }, { Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();}))
     }
 
     override fun onDestroy() {
