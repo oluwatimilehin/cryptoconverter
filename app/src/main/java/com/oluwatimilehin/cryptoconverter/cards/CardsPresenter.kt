@@ -40,7 +40,13 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
         cardsView.showAddCard()
     }
 
-    override fun loadCurrencies() {
+    override fun loadCurrencies(connected: Boolean) {
+
+        if(!connected){
+           cardsView.showApiCallError()
+            return
+        }
+
         disposables.add(currencyDao.checkIfCurrenciesExist()
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -134,7 +140,7 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { cards ->
                     run {
-                        if(!cards.isEmpty()) {
+                        if (!cards.isEmpty()) {
                             for (card in cards) {
                                 currencyDao.getConversionRate(card.from, card.to) //Get the new
                                         // values for currencies and update the cards
@@ -145,7 +151,7 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                                         }, { e -> e.printStackTrace() })
                             }
                             cardsView.updateRecyclerView(cards)
-                        } else{
+                        } else {
                             cardsView.showEmptyCardsError()
                         }
                     }
@@ -153,12 +159,12 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .doOnError { e -> e.printStackTrace() }
     }
 
-    override fun attachView(view: CardsContract.View) {
+    override fun attachView(view: CardsContract.View, connected: Boolean) {
         this.cardsView = view
         currencyDao = App.database.currencyDao()
         cardDao = App.database.cardDao()
 
-        loadCurrencies()
+        loadCurrencies(connected)
     }
 
 

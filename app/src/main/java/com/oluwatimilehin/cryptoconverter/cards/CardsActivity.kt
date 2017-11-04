@@ -1,7 +1,9 @@
 package com.oluwatimilehin.cryptoconverter.cards
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -20,6 +22,8 @@ import com.oluwatimilehin.cryptoconverter.data.Card
 import com.oluwatimilehin.cryptoconverter.data.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
+
+
 
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
@@ -138,6 +142,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
         })
 
+        //Swipe to delete helper for recycler view items.
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
                 val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
@@ -158,7 +163,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onResume() {
         super.onResume()
-        cardsPresenter.attachView(this)
+        cardsPresenter.attachView(this, isConnected())
         cardsPresenter.loadCards()
     }
 
@@ -205,7 +210,16 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
     private fun refreshData() {
-        cardsPresenter.loadCurrencies()
+        cardsPresenter.loadCurrencies(isConnected())
         cardsPresenter.loadCards()
     }
+
+    private fun isConnected(): Boolean{
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+
+        return  activeNetwork != null && activeNetwork.isConnectedOrConnecting
+    }
+
+
 }
