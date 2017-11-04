@@ -61,7 +61,7 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { currencies ->
-                    //First check if the database is populated with currencies
+                    //First check if the database is populated with currency
                     // values
                     if (currencies.isEmpty()) {
                         cardsView.showEmptyCurrenciesError()
