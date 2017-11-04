@@ -48,6 +48,10 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        addCardPresenter.clearDisposables()
+    }
 
     override fun cardExistsError() {
         runOnUiThread({ //This is because it is called from a background thread
