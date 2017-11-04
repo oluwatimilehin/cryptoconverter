@@ -136,7 +136,8 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                     run {
                         if(!cards.isEmpty()) {
                             for (card in cards) {
-                                currencyDao.getConversionRate(card.from, card.to)
+                                currencyDao.getConversionRate(card.from, card.to) //Get the new
+                                        // values for currencies and update the cards
                                         .subscribeOn(scheduler)
                                         .subscribe({ amount ->
                                             cardDao.updateAmount(amount, card
