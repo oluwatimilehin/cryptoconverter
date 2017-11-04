@@ -8,4 +8,5 @@
         again.</string>
     <string name="from_hint">1.00</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="clear_all">Delete all cards</string>
 </resources>

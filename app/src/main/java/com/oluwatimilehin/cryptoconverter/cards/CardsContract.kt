@@ -30,5 +30,6 @@ interface CardsContract {
         fun addNewCard()
         fun deleteCard(card: Card)
         fun loadDetails(card: Card)
+        fun deleteAllCards()
     }
 }

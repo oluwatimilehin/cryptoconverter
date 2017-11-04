@@ -122,6 +122,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
                 swipeRefresh.isRefreshing = true
                 refreshData()
             }
+            R.id.menu_delete -> {
+                cardsPresenter.deleteAllCards()
+            }
         }
         return true
     }

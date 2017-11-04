@@ -27,6 +27,13 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
         loadCurrencies(connected)
     }
 
+    override fun deleteAllCards() {
+        disposables.add(Completable.fromAction{ cardDao.deleteAllCards()}
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { loadCards() }
+        )
+    }
 
     override fun loadDetails(card: Card) {
         val from = card.from
