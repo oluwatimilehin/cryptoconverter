@@ -14,22 +14,6 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
 
     lateinit var addCardPresenter: AddCardPresenter
 
-    override fun cardExistsError() {
-        runOnUiThread({
-            Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
-                    .show()
-        })
-
-    }
-
-    override fun saveCardSuccess() {
-
-        runOnUiThread({
-            setResult(Activity.RESULT_OK)
-            finish()
-        })
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_card)
@@ -67,4 +51,19 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         }
 
     }
+    override fun cardExistsError() {
+        runOnUiThread({
+            Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
+                    .show()
+        })
+
+    }
+
+    override fun saveCardSuccess() {
+        runOnUiThread({
+            setResult(Activity.RESULT_OK)
+            finish()
+        })
+    }
+
 }
