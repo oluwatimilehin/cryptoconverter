@@ -2,7 +2,9 @@
 
 This repository contains an Android application for converting between cryptocurrency and some of the major world currencies.  [apk](https://drive.google.com/open?id=1yrS6j736p9nLUrxtIf1In9FEbm6uVla2)
 
-It implements MVP architecture and makes use of RxJava and Google's Room architecture component. Data is gotten from the Cryptocompare API.
+It implements MVP architecture and makes use of RxJava and Google's Room architecture component. It also contains tests(unit and instrumentation) written for some of the app's components.
+
+Data is gotten from the Cryptocompare API.
 
 A user can create a card to convert from cryptocurrency to another currency anytime after the conversion rates have been saved
 to the database the first time.
