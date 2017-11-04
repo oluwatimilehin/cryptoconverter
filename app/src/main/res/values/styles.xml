@@ -33,5 +33,13 @@
         <item name="android:ems">7</item>
     </style>
 
+    <style name="Spinner">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">200dp</item>
+
+    </style>
+
 
 </resources>
