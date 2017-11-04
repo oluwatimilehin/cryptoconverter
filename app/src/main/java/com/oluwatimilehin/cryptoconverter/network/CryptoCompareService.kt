@@ -27,7 +27,7 @@ interface CryptoCompareService {
         fun create() : CryptoCompareService{
 
             val okHttpClient = OkHttpClient().newBuilder()
-                    .connectTimeout(45, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(45, TimeUnit.SECONDS)
                     .writeTimeout(45, TimeUnit.SECONDS)
                     .build()
