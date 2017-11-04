@@ -28,6 +28,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     lateinit var adapter: CardsAdapter
     private lateinit var dividerItemDecoration: DividerItemDecoration
+    var showMenuDeleteOption = false
 
     companion object {
         val REQUEST_ADD_CARD = 122
@@ -70,6 +71,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         super.onResume()
         cardsPresenter.attachView(this, isConnected())
         cardsPresenter.loadCards()
+
     }
 
     override fun onDestroy() {
@@ -92,6 +94,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     override fun cardsExist() {
         infoTV.visibility = View.GONE
         cardsRv.visibility = View.VISIBLE
+        invalidateOptionsMenu()
+        showMenuDeleteOption = true
         cardsRv.addItemDecoration(dividerItemDecoration)
     }
 
@@ -113,6 +117,10 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+
+        val item = menu.findItem(R.id.menu_delete)
+        item.isVisible = showMenuDeleteOption
+
         return true
     }
 
@@ -177,6 +185,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun showEmptyCardsError() {
         cardsRv.visibility = View.GONE
+        invalidateOptionsMenu()
+        showMenuDeleteOption = false
+
         if (infoTV.visibility != View.VISIBLE) {
             infoTV.visibility = View.VISIBLE
             infoTV.text = getString(R.string.no_cards_message)
