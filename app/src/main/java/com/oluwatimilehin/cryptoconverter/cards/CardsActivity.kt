@@ -45,6 +45,31 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
         addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
         setUpRecyclerView()
+
+        //hide the FAB when the list is scrolled
+        cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 || dy < 0 && addCardButton.isShown) {
+                    addCardButton.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
+                        View.VISIBLE ) {
+                    //The second condition exists because the FAB should not show when there are
+                    // no currencies.
+                    addCardButton.show()
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
+
+
+        swipeRefresh.setOnRefreshListener { cardsPresenter.loadCurrencies()
+                                            cardsPresenter.loadCards()
+        }
     }
 
     override fun cardsExist() {
@@ -78,23 +103,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             infoTV.visibility = View.INVISIBLE
         }
         addCardButton.visibility = View.VISIBLE
-
-        //hide the FAB when the list is scrolled
-        cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0 || dy < 0 && addCardButton.isShown) {
-                    addCardButton.hide()
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    addCardButton.show()
-                }
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-        })
     }
 
     private fun setUpRecyclerView() {
@@ -161,10 +169,12 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         if (infoTV.visibility == View.VISIBLE) {
             infoTV.text = getString(R.string.internet_error)
         }
+
+        swipeRefresh.isRefreshing = false
     }
 
-    override fun onDatabaseUpdateSuccess() {
-
+    override fun onDatabaseUpdateSuccess() {/**/
+        swipeRefresh.isRefreshing = false
     }
 
     lateinit var cardsPresenter: CardsContract.Presenter;
