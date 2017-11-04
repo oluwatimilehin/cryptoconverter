@@ -10,6 +10,8 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
@@ -21,16 +23,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
-    override fun showConversionScreen(from: String, to: String, amount: Double) {
-        val intent = Intent(this, ConversionActivity::class.java)
-        val bundle = Bundle()
-        bundle.putString(Constants.KEY_FROM, from)
-        bundle.putString(Constants.KEY_TO, to)
-        bundle.putDouble(Constants.KEY_AMOUNT, amount)
-        intent.putExtras(bundle)
-
-        startActivity(intent)
-    }
 
     lateinit var adapter: CardsAdapter
     private lateinit var dividerItemDecoration: DividerItemDecoration
@@ -55,9 +47,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
-                        View.VISIBLE ) {
+                        View.VISIBLE) {
                     //The second condition exists because the FAB should not show when there are
                     // no currencies.
                     addCardButton.show()
@@ -66,10 +57,18 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
         })
 
+        swipeRefresh.setOnRefreshListener { refreshData() }
+    }
 
-        swipeRefresh.setOnRefreshListener { cardsPresenter.loadCurrencies()
-                                            cardsPresenter.loadCards()
-        }
+    override fun showConversionScreen(from: String, to: String, amount: Double) {
+        val intent = Intent(this, ConversionActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString(Constants.KEY_FROM, from)
+        bundle.putString(Constants.KEY_TO, to)
+        bundle.putDouble(Constants.KEY_AMOUNT, amount)
+        intent.putExtras(bundle)
+
+        startActivity(intent)
     }
 
     override fun cardsExist() {
@@ -95,6 +94,18 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         loadingIndicator.show()
         infoTV.text = getString(R.string.loading_data)
         infoTV.visibility = View.VISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_refresh -> refreshData()
+        }
+        return true
     }
 
     override fun currenciesExist() {
@@ -188,5 +199,10 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             Snackbar.make(coordinatorLayout, "Card added successfully", Snackbar.LENGTH_SHORT)
                     .show()
         }
+    }
+
+    private fun refreshData(){
+        cardsPresenter.loadCurrencies()
+        cardsPresenter.loadCards()
     }
 }
