@@ -103,8 +103,11 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menu_refresh -> refreshData()
+        when (item.itemId) {
+            R.id.menu_refresh -> {
+                swipeRefresh.isRefreshing = true
+                refreshData()
+            }
         }
         return true
     }
@@ -201,7 +204,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         }
     }
 
-    private fun refreshData(){
+    private fun refreshData() {
         cardsPresenter.loadCurrencies()
         cardsPresenter.loadCards()
     }
