@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "955480791458",
+    "firebase_url": "https://cryptoconverter-69361.firebaseio.com",
+    "project_id": "cryptoconverter-69361",
+    "storage_bucket": "cryptoconverter-69361.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955480791458:android:a4bdd095ec3d5e40",
+        "android_client_info": {
+          "package_name": "com.oluwatimilehin.cryptoconverter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955480791458-6iv8i1i4pfkblofv3083uqaat4nr0pqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.oluwatimilehin.cryptoconverter",
+            "certificate_hash": "f79c6d3802b6e908b0b30016c21c788b6f41de54"
+          }
+        },
+        {
+          "client_id": "955480791458-tuean97kgets6gpe163pffj843ji7npo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2QiNguA5zVvCt3E021kp6t_oq87aVuQw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955480791458-tuean97kgets6gpe163pffj843ji7npo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
