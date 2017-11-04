@@ -24,12 +24,14 @@ import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-
-
 class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     lateinit var adapter: CardsAdapter
     private lateinit var dividerItemDecoration: DividerItemDecoration
+
+    companion object {
+        val REQUEST_ADD_CARD = 122
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,18 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         swipeRefresh.setOnRefreshListener { refreshData() }
     }
 
+    override fun onResume() {
+        super.onResume()
+        cardsPresenter.attachView(this, isConnected())
+        cardsPresenter.loadCards()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cardsPresenter.clearDisposables()
+    }
+
+
     override fun showConversionScreen(from: String, to: String, amount: Double) {
         val intent = Intent(this, ConversionActivity::class.java)
         val bundle = Bundle()
@@ -83,10 +97,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun showCardDeleted() {
         Snackbar.make(coordinatorLayout, "Card deleted", Snackbar.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        val REQUEST_ADD_CARD = 122
     }
 
     override fun showAddCard() {
@@ -128,6 +138,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         val cards: List<Card> = ArrayList()
         adapter = CardsAdapter(cards)
 
+        //Add divider to each RV item
         dividerItemDecoration = DividerItemDecoration(cardsRv.context,
                 LinearLayoutManager(this).orientation)
         dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.card_divider))
@@ -160,18 +171,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         })
         itemTouchHelper.attachToRecyclerView(cardsRv)
     }
-
-    override fun onResume() {
-        super.onResume()
-        cardsPresenter.attachView(this, isConnected())
-        cardsPresenter.loadCards()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cardsPresenter.clearDisposables()
-    }
-
 
     override fun showEmptyCardsError() {
         cardsRv.visibility = View.GONE
@@ -214,11 +213,11 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         cardsPresenter.loadCards()
     }
 
-    private fun isConnected(): Boolean{
+    private fun isConnected(): Boolean {
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
 
-        return  activeNetwork != null && activeNetwork.isConnectedOrConnecting
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
 
 
