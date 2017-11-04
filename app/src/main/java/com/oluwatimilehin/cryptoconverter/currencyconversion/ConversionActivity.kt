@@ -30,6 +30,7 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
         val presenter = ConversionPresenter()
         presenter.attachView(this, rate)
 
+      //When the fromField is being updated, update the toField
         disposables.add(RxTextView.textChanges(fromField)
                 .filter { fromField.hasFocus() }
                 .subscribe({ s ->
@@ -41,7 +42,6 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
                         }
                     }
                 }))
-
 
         disposables.add(RxTextView.textChanges(toField)
                 .filter { toField.hasFocus() }
