@@ -32,7 +32,7 @@
         android:layout_marginTop="124dp"
         android:hint="@string/from_hint"
         android:labelFor="@id/fromLabel"
-        android:maxLength="8"
+        app:autoSizeTextType="uniform"
         app:backgroundTint="@color/colorAccent"
         app:layout_constraintStart_toEndOf="@+id/fromLabel"
         app:layout_constraintTop_toTopOf="parent"/>
