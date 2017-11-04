@@ -54,10 +54,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
-                        View.VISIBLE) {
-                    //The second condition exists because the FAB should not show when there are
-                    // no currencies.
+                if ((newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
+                        View.VISIBLE) || !addCardButton.isShown) {
                     addCardButton.show()
                 }
                 super.onScrollStateChanged(recyclerView, newState)
