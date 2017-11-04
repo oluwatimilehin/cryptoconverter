@@ -4,7 +4,8 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="no_cards_message">You do not have any cards saved!</string>
-    <string name="internet_error">There was an error connecting to the network, please try again</string>
+    <string name="internet_error">Internet connection error, please try
+        again.</string>
     <string name="from_hint">1.00</string>
     <string name="menu_refresh">Refresh</string>
 </resources>
