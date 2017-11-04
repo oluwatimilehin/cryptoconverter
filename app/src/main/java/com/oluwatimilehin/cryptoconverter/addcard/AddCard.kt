@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class AddCard : AppCompatActivity(), AddCardContract.View {
 
-    lateinit var addCardPresenter: AddCardPresenter
+    private lateinit var addCardPresenter: AddCardPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,25 +34,23 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         fromSpinner.adapter = fromAdapter
         toSpinner.adapter = toAdapter
 
-        saveButton.setOnClickListener { view ->
-            run {
-                var from: String
-                var to: String
-
-                if (fromSpinner.selectedItem == null || toSpinner.selectedItem == null) {
-                    Toast.makeText(this, "You must select an item for both fields", Toast
-                            .LENGTH_SHORT).show()
-                } else {
-                    from = fromSpinner.selectedItem as String
-                    to = toSpinner.selectedItem as String
-                    addCardPresenter.saveCard(from, to)
-                }
+        saveButton.setOnClickListener {
+            if (fromSpinner.selectedItem == null || toSpinner.selectedItem == null) {
+                Toast.makeText(this, "You must select an item for both fields", Toast
+                        .LENGTH_SHORT).show()
+            } else {
+                val from = fromSpinner.selectedItem as String
+                val to = toSpinner.selectedItem as String
+                addCardPresenter.saveCard(from, to)
             }
+
         }
 
     }
+
+
     override fun cardExistsError() {
-        runOnUiThread({
+        runOnUiThread({ //This is because it is called from a background thread
             Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
                     .show()
         })
