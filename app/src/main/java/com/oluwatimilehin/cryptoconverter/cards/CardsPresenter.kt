@@ -67,10 +67,10 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
         disposables.add(currencyDao.checkIfCurrenciesExist()
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { currencies ->
+                .map {
                     //First check if the database is populated with currency
                     // values
-                    if (currencies.isEmpty()) {
+                    if (it.isEmpty()) {
                         cardsView.showEmptyCurrenciesError()
                     } else {
                         cardsView.currenciesExist()
@@ -84,11 +84,11 @@ class CardsPresenter : CardsContract.Presenter, BasePresenter() {
                 }
                 .map {
                     loadData() //Then get the data from the API
-                            .map { result -> saveDataInDb(result) }
+                            .map { saveDataInDb(it) }
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
                                 cardsView.onDatabaseUpdateSuccess()
-                            }, { e -> e.printStackTrace() })
+                            }, { it.printStackTrace() })
                 }
                 .subscribe())
 
