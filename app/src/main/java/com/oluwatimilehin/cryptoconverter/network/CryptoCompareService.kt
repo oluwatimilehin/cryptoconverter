@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
  * oluwatimilehinadeniran@gmail.com.
  */
 interface CryptoCompareService {
-    @GET("data/pricemulti?fsyms=BTC,ETH")
+    @GET("data/pricemulti?fsyms=BTC,ETH,LTC,BH")
     fun getRates(@Query("tsyms") tsyms : String) : Single<ExchangeRate>
 
 

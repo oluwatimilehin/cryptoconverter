@@ -26,7 +26,7 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         addCardPresenter.attachView(this)
 
         val fromAdapter = ArrayAdapter<String>(this, R.layout.custom_spinner_item, arrayOf("BTC",
-                "ETH"))
+                "ETH","LTC", "BH"))
 
         val toAdapter = ArrayAdapter<String>(this, R.layout.custom_spinner_item,
                 Constants.getCurrenciesNames())
