@@ -2,6 +2,7 @@ package com.oluwatimilehin.cryptoconverter.di
 
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.data.di.ApiServiceModule
+import com.oluwatimilehin.cryptoconverter.data.di.CardsRepositoryModule
 import com.oluwatimilehin.cryptoconverter.data.di.DatabaseModule
 import dagger.Component
 import javax.inject.Singleton
@@ -12,7 +13,7 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(DatabaseModule::class, AppModule::class,
-        ApiServiceModule::class))
+        ApiServiceModule::class, CardsRepositoryModule::class))
 interface AppComponent{
     fun inject(application: App)
 }
