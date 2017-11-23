@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".addcard.AddCard">
         </activity>
-        <activity android:name=".currencyconversion.ConversionActivity"
+        <activity android:name=".conversion.ConversionActivity"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
     </application>

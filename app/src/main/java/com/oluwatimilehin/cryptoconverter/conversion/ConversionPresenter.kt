@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.currencyconversion
+package com.oluwatimilehin.cryptoconverter.conversion
 
 import java.math.BigDecimal
 import java.math.RoundingMode

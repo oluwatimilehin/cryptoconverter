@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.currencyconversion
+package com.oluwatimilehin.cryptoconverter.conversion
 
 /**
  * Created by Oluwatimilehin on 03/11/2017.

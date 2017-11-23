@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.currencyconversion
+package com.oluwatimilehin.cryptoconverter.conversion
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

@@ -1,5 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.data.di
 
+import com.oluwatimilehin.cryptoconverter.utils.schedulers.SchedulerType
 import javax.inject.Qualifier
 
 /**
@@ -8,4 +9,4 @@ import javax.inject.Qualifier
  */
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Local
+annotation class RunOn(val type: SchedulerType = SchedulerType.IO)

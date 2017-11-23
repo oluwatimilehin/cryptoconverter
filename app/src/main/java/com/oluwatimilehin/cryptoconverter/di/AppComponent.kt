@@ -4,6 +4,7 @@ import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.data.di.ApiServiceModule
 import com.oluwatimilehin.cryptoconverter.data.di.CardsRepositoryModule
 import com.oluwatimilehin.cryptoconverter.data.di.DatabaseModule
+import com.oluwatimilehin.cryptoconverter.utils.schedulers.SchedulerModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -13,7 +14,7 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(DatabaseModule::class, AppModule::class,
-        ApiServiceModule::class, CardsRepositoryModule::class))
+        ApiServiceModule::class, CardsRepositoryModule::class, SchedulerModule::class))
 interface AppComponent{
     fun inject(application: App)
 }

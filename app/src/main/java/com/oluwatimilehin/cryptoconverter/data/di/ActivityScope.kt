@@ -1,11 +1,11 @@
 package com.oluwatimilehin.cryptoconverter.data.di
 
-import javax.inject.Qualifier
+import javax.inject.Scope
 
 /**
  * Created by Oluwatimilehin on 23/11/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-@Qualifier
+@Scope
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Local
+annotation class ActivityScope

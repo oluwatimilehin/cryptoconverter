@@ -17,7 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
-import com.oluwatimilehin.cryptoconverter.currencyconversion.ConversionActivity
+import com.oluwatimilehin.cryptoconverter.conversion.ConversionActivity
 import com.oluwatimilehin.cryptoconverter.data.models.Card
 import com.oluwatimilehin.cryptoconverter.data.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
