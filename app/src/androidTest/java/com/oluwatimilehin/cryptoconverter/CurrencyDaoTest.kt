@@ -1,5 +1,5 @@
 package com.oluwatimilehin.cryptoconverter
-import com.oluwatimilehin.cryptoconverter.data.Currency
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
 import org.junit.Test
 
 /**

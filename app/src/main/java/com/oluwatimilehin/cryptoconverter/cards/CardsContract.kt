@@ -1,6 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.cards;
 
-import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Card
 
 /**
  * Created by Oluwatimilehin on 13/10/2017.

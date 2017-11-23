@@ -1,7 +1,7 @@
 package com.oluwatimilehin.cryptoconverter
 
 import com.google.gson.Gson
-import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
+import com.oluwatimilehin.cryptoconverter.data.models.ExchangeRate
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

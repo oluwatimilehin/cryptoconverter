@@ -2,10 +2,10 @@ package com.oluwatimilehin.cryptoconverter.cards
 
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.BasePresenter
-import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Card
 import com.oluwatimilehin.cryptoconverter.data.Constants
-import com.oluwatimilehin.cryptoconverter.data.Currency
-import com.oluwatimilehin.cryptoconverter.data.ExchangeRate
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
+import com.oluwatimilehin.cryptoconverter.data.models.ExchangeRate
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
 import io.reactivex.Completable
 import io.reactivex.Flowable

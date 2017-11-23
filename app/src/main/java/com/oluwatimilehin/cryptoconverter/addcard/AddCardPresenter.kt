@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteConstraintException
 import com.mynameismidori.currencypicker.ExtendedCurrency
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.BasePresenter
-import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Card
 
 /**
  * Created by Oluwatimilehin on 30/10/2017.

@@ -4,6 +4,10 @@ import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.migration.Migration
+import com.oluwatimilehin.cryptoconverter.data.daos.CardDao
+import com.oluwatimilehin.cryptoconverter.data.daos.CurrencyDao
+import com.oluwatimilehin.cryptoconverter.data.models.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
 
 /**
  * Created by Oluwatimilehin on 12/10/2017.

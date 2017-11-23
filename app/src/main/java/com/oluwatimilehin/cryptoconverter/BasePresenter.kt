@@ -2,8 +2,8 @@ package com.oluwatimilehin.cryptoconverter
 
 import com.oluwatimilehin.cryptoconverter.addcard.AddCardContract
 import com.oluwatimilehin.cryptoconverter.cards.CardsContract
-import com.oluwatimilehin.cryptoconverter.data.CardDao
-import com.oluwatimilehin.cryptoconverter.data.CurrencyDao
+import com.oluwatimilehin.cryptoconverter.data.daos.CardDao
+import com.oluwatimilehin.cryptoconverter.data.daos.CurrencyDao
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

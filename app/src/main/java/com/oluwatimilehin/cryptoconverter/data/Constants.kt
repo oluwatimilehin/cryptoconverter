@@ -11,6 +11,9 @@ class Constants{
 
     companion object {
 
+        val BASE_URL = "https://min-api.cryptocompare.com/"
+        val DB_NAME = "app-db"
+
         val KEY_FROM = "from"
         val KEY_TO = "to"
         val KEY_AMOUNT = "amount"

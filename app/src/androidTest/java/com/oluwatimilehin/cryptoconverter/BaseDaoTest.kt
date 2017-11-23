@@ -4,9 +4,9 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import com.oluwatimilehin.cryptoconverter.data.AppDatabase
-import com.oluwatimilehin.cryptoconverter.data.CardDao
-import com.oluwatimilehin.cryptoconverter.data.Currency
-import com.oluwatimilehin.cryptoconverter.data.CurrencyDao
+import com.oluwatimilehin.cryptoconverter.data.daos.CardDao
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
+import com.oluwatimilehin.cryptoconverter.data.daos.CurrencyDao
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

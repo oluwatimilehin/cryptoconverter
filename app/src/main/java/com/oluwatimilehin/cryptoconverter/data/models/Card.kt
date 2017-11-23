@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.data
+package com.oluwatimilehin.cryptoconverter.data.models
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

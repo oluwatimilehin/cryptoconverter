@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.data
+package com.oluwatimilehin.cryptoconverter.data.models
 
 import com.google.gson.annotations.SerializedName
 

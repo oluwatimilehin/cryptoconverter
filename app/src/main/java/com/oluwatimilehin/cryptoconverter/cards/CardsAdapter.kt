@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.oluwatimilehin.cryptoconverter.R
-import com.oluwatimilehin.cryptoconverter.data.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Card
 import kotlinx.android.synthetic.main.card_item.view.*
 
 /**

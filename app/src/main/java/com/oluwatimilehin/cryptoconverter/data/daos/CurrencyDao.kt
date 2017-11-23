@@ -1,9 +1,10 @@
-package com.oluwatimilehin.cryptoconverter.data
+package com.oluwatimilehin.cryptoconverter.data.daos
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
 import io.reactivex.Flowable
 import io.reactivex.Single
 

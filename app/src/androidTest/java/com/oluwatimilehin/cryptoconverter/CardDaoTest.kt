@@ -1,8 +1,8 @@
 package com.oluwatimilehin.cryptoconverter
 
 import android.database.sqlite.SQLiteConstraintException
-import com.oluwatimilehin.cryptoconverter.data.Card
-import com.oluwatimilehin.cryptoconverter.data.Currency
+import com.oluwatimilehin.cryptoconverter.data.models.Card
+import com.oluwatimilehin.cryptoconverter.data.models.Currency
 import junit.framework.Assert.fail
 import org.junit.Before
 import org.junit.Test
