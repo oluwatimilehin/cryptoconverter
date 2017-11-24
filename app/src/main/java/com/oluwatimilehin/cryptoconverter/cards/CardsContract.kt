@@ -25,7 +25,7 @@ interface CardsContract {
     interface Presenter{
         fun loadCurrencies(connected: Boolean)
         fun loadCards()
-        fun attachView(view: CardsContract.View, connected: Boolean)
+        fun attachView(connected: Boolean)
         fun clearDisposables()
         fun addNewCard()
         fun deleteCard(card: Card)

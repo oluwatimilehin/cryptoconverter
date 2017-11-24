@@ -15,13 +15,16 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.R
 import com.oluwatimilehin.cryptoconverter.addcard.AddCard
+import com.oluwatimilehin.cryptoconverter.cards.di.CardsListModule
 import com.oluwatimilehin.cryptoconverter.conversion.ConversionActivity
 import com.oluwatimilehin.cryptoconverter.data.models.Card
 import com.oluwatimilehin.cryptoconverter.data.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 
 class CardsActivity : AppCompatActivity(), CardsContract.View {
@@ -29,6 +32,9 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     lateinit var adapter: CardsAdapter
     private lateinit var dividerItemDecoration: DividerItemDecoration
     var showMenuDeleteOption = false
+
+    @Inject
+    lateinit var presenter: CardsPresenter
 
     companion object {
         val REQUEST_ADD_CARD = 122
@@ -40,29 +46,19 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        cardsPresenter = CardsPresenter()
-
         addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
+        injectComponents()
         setUpRecyclerView()
-
-        //hide the FAB when the list is scrolled
-        cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0 || dy < 0 && addCardButton.isShown) {
-                    addCardButton.hide()
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                if ((newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
-                        View.VISIBLE) || !addCardButton.isShown) {
-                    addCardButton.show()
-                }
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-        })
-
         swipeRefresh.setOnRefreshListener { refreshData() }
+
+        presenter.attachView(isConnected())
+    }
+
+    private fun injectComponents(){
+        (application as App)
+                .appComponent
+                .plus(CardsListModule(this))
+                .inject(this)
     }
 
     override fun onResume() {
@@ -179,6 +175,23 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
             }
         })
         itemTouchHelper.attachToRecyclerView(cardsRv)
+
+        //hide the FAB when the list is scrolled
+        cardsRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 || dy < 0 && addCardButton.isShown) {
+                    addCardButton.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                if ((newState == RecyclerView.SCROLL_STATE_IDLE && addCardButton.visibility ==
+                        View.VISIBLE) || !addCardButton.isShown) {
+                    addCardButton.show()
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
     }
 
     override fun showEmptyCardsError() {
