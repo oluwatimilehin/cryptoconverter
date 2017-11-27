@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.oluwatimilehin.cryptoconverter.R
-import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.utils.Constants
 import kotlinx.android.synthetic.main.activity_add_card.*
 import kotlinx.android.synthetic.main.toolbar.*
 

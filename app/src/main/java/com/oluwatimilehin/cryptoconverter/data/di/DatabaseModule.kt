@@ -3,7 +3,7 @@ package com.oluwatimilehin.cryptoconverter.data.di
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.oluwatimilehin.cryptoconverter.data.AppDatabase
-import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.utils.Constants
 import com.oluwatimilehin.cryptoconverter.data.daos.CardDao
 import com.oluwatimilehin.cryptoconverter.data.daos.CurrencyDao
 import dagger.Module

@@ -1,7 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.data.di
 
-import com.oluwatimilehin.cryptoconverter.data.CardsDataSource
-import com.oluwatimilehin.cryptoconverter.data.LocalCardsDataSource
+import com.oluwatimilehin.cryptoconverter.data.local.CardsDataManager
+import com.oluwatimilehin.cryptoconverter.data.local.LocalCardsDataManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,6 +16,6 @@ class CardsRepositoryModule{
     @Provides
     @Singleton
     @Local
-    fun provideLocalCardsDataSource( localCardsDataSource: LocalCardsDataSource): CardsDataSource =
-            localCardsDataSource
+    fun provideLocalCardsDataSource(localCardsDataManager: LocalCardsDataManager): CardsDataManager =
+            localCardsDataManager
 }

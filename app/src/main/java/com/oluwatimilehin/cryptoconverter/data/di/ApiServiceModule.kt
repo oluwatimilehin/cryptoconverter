@@ -1,6 +1,6 @@
 package com.oluwatimilehin.cryptoconverter.data.di
 
-import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.utils.Constants
 import com.oluwatimilehin.cryptoconverter.network.CryptoCompareService
 import dagger.Module
 import dagger.Provides

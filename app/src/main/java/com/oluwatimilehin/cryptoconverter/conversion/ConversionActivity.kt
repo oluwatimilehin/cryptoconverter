@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.oluwatimilehin.cryptoconverter.R
-import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.utils.Constants
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_convert_amount.*
 import kotlinx.android.synthetic.main.toolbar.*

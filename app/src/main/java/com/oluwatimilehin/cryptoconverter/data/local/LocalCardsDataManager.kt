@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.data
+package com.oluwatimilehin.cryptoconverter.data.local
 
 import com.oluwatimilehin.cryptoconverter.data.daos.CardDao
 import com.oluwatimilehin.cryptoconverter.data.models.Card
@@ -9,7 +9,11 @@ import javax.inject.Inject
  * Created by Oluwatimilehin on 23/11/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class LocalCardsDataSource public @Inject constructor(val cardDao: CardDao) : CardsDataSource{
+class LocalCardsDataManager public @Inject constructor(private val cardDao: CardDao) : CardsDataManager {
+    override fun updateAmount(card: Card, value: Double) {
+        cardDao.updateAmount(value, card.from, card.to)
+    }
+
     override fun saveCard(card: Card) {
         cardDao.insert(card)
     }

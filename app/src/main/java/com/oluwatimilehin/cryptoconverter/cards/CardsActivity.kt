@@ -21,7 +21,7 @@ import com.oluwatimilehin.cryptoconverter.addcard.AddCard
 import com.oluwatimilehin.cryptoconverter.cards.di.CardsListModule
 import com.oluwatimilehin.cryptoconverter.conversion.ConversionActivity
 import com.oluwatimilehin.cryptoconverter.data.models.Card
-import com.oluwatimilehin.cryptoconverter.data.Constants
+import com.oluwatimilehin.cryptoconverter.utils.Constants
 import kotlinx.android.synthetic.main.activity_cards.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -46,12 +46,12 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        addCardButton.setOnClickListener { cardsPresenter.addNewCard() }
+        addCardButton.setOnClickListener { this.presenter.addNewCard() }
         injectComponents()
         setUpRecyclerView()
         swipeRefresh.setOnRefreshListener { refreshData() }
 
-        presenter.attachView(isConnected())
+        presenter.checkIfCurrenciesExist()
     }
 
     private fun injectComponents(){
@@ -63,14 +63,13 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
     override fun onResume() {
         super.onResume()
-        cardsPresenter.attachView(this, isConnected())
-        cardsPresenter.loadCards()
-
+        presenter.loadCards()
+        presenter.loadCurrencies(isConnected())
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cardsPresenter.clearDisposables()
+        this.presenter.clearDisposables()
     }
 
 
@@ -125,7 +124,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
                 refreshData()
             }
             R.id.menu_delete -> {
-                cardsPresenter.deleteAllCards()
+                this.presenter.deleteAllCards()
             }
         }
         return true
@@ -154,7 +153,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         adapter.setClickListener(object : CardsAdapter.CardClickListener {
             override fun onItemClicked(position: Int) {
                 val currentCard = adapter.cards[position]
-                cardsPresenter.loadDetails(currentCard)
+                this@CardsActivity.presenter.loadDetails(currentCard)
             }
         })
 
@@ -171,7 +170,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
                 val card = adapter.cards[viewHolder?.adapterPosition!!]
-                cardsPresenter.deleteCard(card)
+                this@CardsActivity.presenter.deleteCard(card)
             }
         })
         itemTouchHelper.attachToRecyclerView(cardsRv)
@@ -220,8 +219,6 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         swipeRefresh.isRefreshing = false
     }
 
-    lateinit var cardsPresenter: CardsContract.Presenter;
-
     override fun updateRecyclerView(cards: List<Card>) {
         adapter.updateList(cards)
     }
@@ -234,8 +231,8 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
     }
 
     private fun refreshData() {
-        cardsPresenter.loadCurrencies(isConnected())
-        cardsPresenter.loadCards()
+        this.presenter.loadCurrencies(isConnected())
+        this.presenter.loadCards()
     }
 
     private fun isConnected(): Boolean {

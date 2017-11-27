@@ -1,4 +1,4 @@
-package com.oluwatimilehin.cryptoconverter.data
+package com.oluwatimilehin.cryptoconverter.utils
 
 import android.text.TextUtils
 import com.mynameismidori.currencypicker.ExtendedCurrency
