@@ -11,6 +11,12 @@ data class ExchangeRate(
         val ethRates: HashMap<String, Double>,
 
         @SerializedName("BTC")
-        val btcRates: HashMap<String, Double>
+        val btcRates: HashMap<String, Double>,
+
+        @SerializedName("LTC")
+        val ltcRates: HashMap<String, Double>,
+
+        @SerializedName("BH")
+        val bhRates: HashMap<String, Double>
 )
 

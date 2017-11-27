@@ -34,6 +34,8 @@ class CurrencyRepository @Inject constructor(private val remoteCurrencyDataSourc
                     val combinedList: MutableList<Currency> = ArrayList()
                     combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates))
                     combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
+                    combinedList.addAll(createCurrencyObjects("LTC", rates.ltcRates))
+                    combinedList.addAll(createCurrencyObjects("BH", rates.bhRates))
 
                     return@flatMap Single.just(combinedList)
                 }

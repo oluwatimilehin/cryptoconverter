@@ -21,7 +21,7 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
                                          Scheduler, @RunOn(SchedulerType.MAIN) val mainThread: Scheduler) :
         CardsContract.Presenter {
 
-    lateinit var disposables: CompositeDisposable
+    var disposables: CompositeDisposable = CompositeDisposable()
 
     override fun checkIfCurrenciesExist() {
         val disposable = currencyRepository.checkIfCurrenciesExist()
