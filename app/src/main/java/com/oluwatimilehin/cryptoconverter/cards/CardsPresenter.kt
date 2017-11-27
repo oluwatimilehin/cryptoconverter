@@ -64,7 +64,7 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
         view.showAddCard()
     }
 
-    fun registerForUpdates() {
+    private fun registerForUpdates() {
         disposables.add(currencyRepository.getObservableCurrencies()
                 .subscribeOn(ioScheduler)
                 .flatMapSingle { cardsRepository.getAllCards() }
@@ -94,7 +94,7 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
         disposables.add(currencyRepository.loadCurrencies()
                 .subscribeOn(ioScheduler)
                 .observeOn(mainThread)
-                .subscribe({ view.onDatabaseUpdateSuccess() }, { it.printStackTrace() })
+                .subscribe({ view.onDatabaseUpdateSuccess() }, { view.showApiCallError() })
         )
     }
 

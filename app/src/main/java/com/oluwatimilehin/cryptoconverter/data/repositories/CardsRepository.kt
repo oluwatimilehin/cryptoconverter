@@ -11,7 +11,6 @@ import javax.inject.Inject
  * oluwatimilehinadeniran@gmail.com.
  */
 class CardsRepository public @Inject constructor(@Local private val localCardsDataManager: CardsDataManager){
-      var localDataSource = localCardsDataManager
 
     fun saveCard(card: Card){
         localCardsDataManager.saveCard(card)
@@ -34,8 +33,5 @@ class CardsRepository public @Inject constructor(@Local private val localCardsDa
                .filter({it.isNotEmpty()})
                .toObservable()
                .singleOrError()
-//               .flatMap { if(it.isEmpty()) return@flatMap  Single.error<List<Card>>(NoSuchElementException())
-//                 return@flatMap Single.just(it)
-//               }
     }
 }
