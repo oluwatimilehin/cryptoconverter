@@ -9,7 +9,7 @@ import dagger.Subcomponent
  * oluwatimilehinadeniran@gmail.com.
  */
 @ActivityScope
-@Subcomponent(modules = arrayOf(CardsListComponent::class))
+@Subcomponent(modules = arrayOf(CardsListModule::class))
 interface CardsListComponent {
     fun inject(view: CardsActivity)
 }

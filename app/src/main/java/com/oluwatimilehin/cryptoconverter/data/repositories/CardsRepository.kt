@@ -31,8 +31,11 @@ class CardsRepository public @Inject constructor(@Local private val localCardsDa
 
     fun getAllCards(): Single<List<Card>> {
        return localCardsDataManager.getCards()
-                .filter({it.isNotEmpty()})
+               .filter({it.isNotEmpty()})
                .toObservable()
                .singleOrError()
+//               .flatMap { if(it.isEmpty()) return@flatMap  Single.error<List<Card>>(NoSuchElementException())
+//                 return@flatMap Single.just(it)
+//               }
     }
 }
