@@ -28,20 +28,22 @@ class CurrencyRepository @Inject constructor(private val remoteCurrencyDataSourc
     }
 
 
-    fun loadCurrencies(): Flowable<MutableList<Currency>> {
+    fun loadCurrencies(): Single<MutableList<Currency>> {
         return remoteCurrencyDataSource.loadData()
                 .flatMap { rates: ExchangeRate ->
                     val combinedList: MutableList<Currency> = ArrayList()
                     combinedList.addAll(createCurrencyObjects("BTC", rates.btcRates))
                     combinedList.addAll(createCurrencyObjects("ETH", rates.ethRates))
                     combinedList.addAll(createCurrencyObjects("LTC", rates.ltcRates))
-                    combinedList.addAll(createCurrencyObjects("BH", rates.bhRates))
+                    combinedList.addAll(createCurrencyObjects("BCH", rates.bchRates))
 
                     return@flatMap Single.just(combinedList)
                 }
-                .doOnSuccess { localCurrencyDataManager.saveCurrencies(it) }
-                .toFlowable()
 
+    }
+
+    fun saveCurrencies(list: MutableList<Currency> ){
+        localCurrencyDataManager.saveCurrencies(list)
     }
 
     fun getObservableCurrencies(): Flowable<List<Currency>> = localCurrencyDataManager.getCurrenciesAsFlowable()

@@ -11,7 +11,7 @@ import retrofit2.http.Query
  * oluwatimilehinadeniran@gmail.com.
  */
 interface CryptoCompareService {
-    @GET("data/pricemulti?fsyms=BTC,ETH,LTC,BH")
+    @GET("data/pricemulti?fsyms=BTC,ETH,LTC,BCH")
     fun getRates(@Query("tsyms") tsyms : String) : Single<ExchangeRate>
 
 

@@ -16,7 +16,7 @@ data class ExchangeRate(
         @SerializedName("LTC")
         val ltcRates: HashMap<String, Double>,
 
-        @SerializedName("BH")
-        val bhRates: HashMap<String, Double>
+        @SerializedName("BCH")
+        val bchRates: HashMap<String, Double>
 )
 

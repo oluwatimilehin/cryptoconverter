@@ -46,7 +46,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        addCardButton.setOnClickListener { this.presenter.addNewCard() }
+        addCardButton.setOnClickListener { this.presenter.navigateToAddCardScreen() }
         injectComponents()
         setUpRecyclerView()
         swipeRefresh.setOnRefreshListener { refreshData() }
@@ -67,11 +67,16 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         presenter.loadCurrencies(isConnected())
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         this.presenter.clearDisposables()
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.registerForUpdates()
+    }
 
     override fun showConversionScreen(from: String, to: String, amount: Double) {
         val intent = Intent(this, ConversionActivity::class.java)
@@ -153,7 +158,7 @@ class CardsActivity : AppCompatActivity(), CardsContract.View {
         adapter.setClickListener(object : CardsAdapter.CardClickListener {
             override fun onItemClicked(position: Int) {
                 val currentCard = adapter.cards[position]
-                this@CardsActivity.presenter.loadDetails(currentCard)
+                this@CardsActivity.presenter.navigateToConversionScreen(currentCard)
             }
         })
 

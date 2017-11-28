@@ -27,9 +27,9 @@ interface CardsContract {
         fun loadCards()
         fun checkIfCurrenciesExist()
         fun clearDisposables()
-        fun addNewCard()
+        fun navigateToAddCardScreen()
         fun deleteCard(card: Card)
-        fun loadDetails(card: Card)
+        fun navigateToConversionScreen(card: Card)
         fun deleteAllCards()
     }
 }

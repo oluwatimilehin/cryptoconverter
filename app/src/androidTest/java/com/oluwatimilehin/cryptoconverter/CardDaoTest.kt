@@ -47,23 +47,16 @@ class CardDaoTest : BaseDaoTest() {
     fun getActualConversionRateAndTestUpdate() {
         currencyDao.insertAllCurrencies(listOfCurrencies)
 
-        currencyDao.getAllCurrencies().map { currencies ->
-            cardDao.getAllCards().doOnSuccess{ cards ->
-                run {
-                    for (card in cards) {
-                        currencyDao.getConversionRate(card.from, card.to).subscribe({ amount ->
-                            cardDao.updateAmount(amount, card
-                                    .from, card.to)
-
-                        }, { e -> e.printStackTrace() })
-
-                    }
-
-                }
-
-            }.subscribe()
-
-        }.subscribe()
+        currencyDao.getAllCurrencies()
+                .flatMapSingle { cardDao.getAllCards() }
+                .flatMapIterable { it }
+                .flatMap({it: Card ->
+                    currencyDao.getConversionRate(it.from, it.to).toFlowable()
+                }, {card: Card, value: Double ->
+                    Pair(card, value) })
+                .map{cardDao.updateAmount(it.second, it.first.from, it.first.to)}
+                .toList()
+                .subscribe()
 
         val currencyFour = Currency(0, "ETH", "EUR", 212.12)
         val currencyThreeConflict = Currency(0, "ETH", "NGN", 222.23)
@@ -88,4 +81,6 @@ class CardDaoTest : BaseDaoTest() {
                 .assertValue { cards -> cards.size == 3 }
 
     }
+
+
 }

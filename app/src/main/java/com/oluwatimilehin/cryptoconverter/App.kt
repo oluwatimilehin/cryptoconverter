@@ -7,6 +7,7 @@ import com.oluwatimilehin.cryptoconverter.data.AppDatabase
 import com.oluwatimilehin.cryptoconverter.di.AppComponent
 import com.oluwatimilehin.cryptoconverter.di.AppModule
 import com.oluwatimilehin.cryptoconverter.di.DaggerAppComponent
+import com.squareup.leakcanary.LeakCanary
 
 /**
  * Created by Oluwatimilehin on 12/10/2017.
@@ -21,6 +22,13 @@ class App : Application(){
 
     override fun onCreate() {
         super.onCreate()
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
 
         Stetho.initializeWithDefaults(this)
 
