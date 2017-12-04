@@ -5,25 +5,24 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created by Oluwatimilehin on 03/11/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class ConversionPresenter : ConversionContract.Presenter {
-    override fun attachView(view: ConversionContract.View, rate: Double) {
-        this.view = view
+class ConversionPresenter @Inject constructor(val view: ConversionContract.View) :
+        ConversionContract.Presenter  {
+    override fun setAmount(rate: Double) {
         this.rate = BigDecimal.valueOf(rate)
     }
 
     private lateinit var rate: BigDecimal
-    lateinit var view: ConversionContract.View
     private val formatter = DecimalFormat("#,###,###.###")
 
     override fun convertAmount(input: String, conversion: String) {
-        var amount: BigDecimal
         val numberFormat = NumberFormat.getNumberInstance(Locale.US)
-        amount = BigDecimal.valueOf(numberFormat.parse(input).toDouble())
+        var amount = BigDecimal.valueOf(numberFormat.parse(input).toDouble())
 
         when (conversion) {
             "from" -> {

@@ -46,9 +46,7 @@ mainThread: Scheduler, private val extendedCurrencyWrapper: ExtendedCurrencyWrap
                     }
                 }
                 .observeOn(mainThread)
-                .doOnComplete({ view.saveCardSuccess() })
-                .doOnError { view.cardExistsError() }
-                .subscribe({}, { it.printStackTrace() })
+                .subscribe({view.saveCardSuccess()}, { view.cardExistsError()})
 
         )
 

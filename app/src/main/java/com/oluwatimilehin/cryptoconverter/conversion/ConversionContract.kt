@@ -11,8 +11,8 @@ interface ConversionContract{
     }
 
     interface Presenter{
+        fun setAmount(rate: Double)
         fun convertAmount(input: String, conversion: String)
-        fun attachView(view: ConversionContract.View, rate: Double)
     }
 
 }

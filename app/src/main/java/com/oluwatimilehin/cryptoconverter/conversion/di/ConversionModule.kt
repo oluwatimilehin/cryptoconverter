@@ -11,5 +11,5 @@ import dagger.Provides
 @Module
 class ConversionModule(val view: ConversionContract.View){
     @Provides
-    fun provideView() = view
+    fun provideView(): ConversionContract.View = view
 }
