@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.R
+import com.oluwatimilehin.cryptoconverter.addcard.di.AddCardPresenterModule
 import com.oluwatimilehin.cryptoconverter.utils.Constants
 import kotlinx.android.synthetic.main.activity_add_card.*
 import kotlinx.android.synthetic.main.toolbar.*
+import javax.inject.Inject
 
 class AddCard : AppCompatActivity(), AddCardContract.View {
 
-    private lateinit var addCardPresenter: AddCardPresenter
+    @Inject
+    lateinit var addCardPresenter: AddCardPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +27,7 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.title = "Add Card"
 
-        addCardPresenter = AddCardPresenter()
-        addCardPresenter.attachView(this)
+        injectComponents()
 
         val fromAdapter = ArrayAdapter<String>(this, R.layout.custom_spinner_item, arrayOf("BTC",
                 "ETH", "LTC", "BCH"))
@@ -34,18 +38,25 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         fromSpinner.adapter = fromAdapter
         toSpinner.adapter = toAdapter
 
-        saveButton.setOnClickListener {
-            if (fromSpinner.selectedItem == null || toSpinner.selectedItem == null) {
-                Toast.makeText(this, "You must select an item for both fields", Toast
-                        .LENGTH_SHORT).show()
-            } else {
-                val from = fromSpinner.selectedItem as String
-                val to = toSpinner.selectedItem as String
-                addCardPresenter.saveCard(from, to)
-            }
+        saveButton.setOnClickListener { saveCard() }
+    }
 
+    private fun saveCard(){
+        if (fromSpinner.selectedItem == null || toSpinner.selectedItem == null) {
+            Toast.makeText(this, "You must select an item for both fields", Toast
+                    .LENGTH_SHORT).show()
+        } else {
+            val from = fromSpinner.selectedItem as String
+            val to = toSpinner.selectedItem as String
+            addCardPresenter.saveCard(from, to)
         }
+    }
 
+    private fun injectComponents(){
+        (application as App)
+                .appComponent
+                .plus(AddCardPresenterModule(this))
+                .inject(this)
     }
 
     override fun onDestroy() {
@@ -54,10 +65,8 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
     }
 
     override fun cardExistsError() {
-
         Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
                 .show()
-
     }
 
     override fun saveCardSuccess() {
