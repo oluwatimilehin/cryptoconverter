@@ -1,7 +1,6 @@
 package com.oluwatimilehin.cryptoconverter
 
 import android.app.Application
-import android.arch.persistence.room.Room
 import com.facebook.stetho.Stetho
 import com.oluwatimilehin.cryptoconverter.data.AppDatabase
 import com.oluwatimilehin.cryptoconverter.di.AppComponent
@@ -36,8 +35,5 @@ class App : Application(){
                 .appModule(AppModule(this))
                 .build()
 
-        App.database = Room.databaseBuilder(this, AppDatabase::class.java, "app-db")
-                .addMigrations(AppDatabase.MIGRATION_2_3)
-                .build()
     }
 }
