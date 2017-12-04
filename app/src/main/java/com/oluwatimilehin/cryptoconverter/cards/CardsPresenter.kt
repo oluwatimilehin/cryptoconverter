@@ -67,9 +67,6 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
         disposables.add(currencyRepository.getObservableCurrencies()
                 .subscribeOn(ioScheduler)
                 .flatMapSingle { cardsRepository.getAllCards() }
-                .observeOn(mainThread)
-                .doOnError({it.printStackTrace()})
-                .observeOn(ioScheduler)
                 .flatMapIterable { it }
                 .flatMap({ it: Card ->
                     currencyRepository.getAmountValue(it.from, it.to)
