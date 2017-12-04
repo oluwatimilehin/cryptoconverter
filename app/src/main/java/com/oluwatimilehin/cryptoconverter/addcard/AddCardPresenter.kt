@@ -1,16 +1,17 @@
 package com.oluwatimilehin.cryptoconverter.addcard
 
-import android.database.sqlite.SQLiteConstraintException
 import com.mynameismidori.currencypicker.ExtendedCurrency
 import com.oluwatimilehin.cryptoconverter.App
 import com.oluwatimilehin.cryptoconverter.BasePresenter
 import com.oluwatimilehin.cryptoconverter.data.models.Card
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * Created by Oluwatimilehin on 30/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class AddCardPresenter : AddCardContract.Presenter, BasePresenter(){
+class AddCardPresenter : AddCardContract.Presenter, BasePresenter() {
     override fun clearDisposables() {
         disposables.clear()
     }
@@ -26,20 +27,21 @@ class AddCardPresenter : AddCardContract.Presenter, BasePresenter(){
 
         disposables.add(currencyDao.getConversionRate(from, currency.code)
                 .subscribeOn(scheduler)
-                .subscribe({ amount ->
+                .doOnError { it.printStackTrace() }
+                .flatMapCompletable {
                     val flag = currency.flag
                     val name = currency.name
+                    val card = Card(0, name, from, currency.code, it, flag)
 
-                    val card = Card(0, name, from, currency.code, amount, flag)
-
-                    try {
+                    return@flatMapCompletable Completable.fromAction {
                         cardDao.insert(card)
-                        addCardsView.saveCardSuccess()
-
-                    }catch (e: SQLiteConstraintException){
-                        addCardsView.cardExistsError()
                     }
-                })
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete({ addCardsView.saveCardSuccess() })
+                .doOnError { addCardsView.cardExistsError() }
+                .subscribe({}, {it.printStackTrace()})
+
         )
 
 

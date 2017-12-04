@@ -26,7 +26,7 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
         addCardPresenter.attachView(this)
 
         val fromAdapter = ArrayAdapter<String>(this, R.layout.custom_spinner_item, arrayOf("BTC",
-                "ETH","LTC", "BCH"))
+                "ETH", "LTC", "BCH"))
 
         val toAdapter = ArrayAdapter<String>(this, R.layout.custom_spinner_item,
                 Constants.getCurrenciesNames())
@@ -54,18 +54,15 @@ class AddCard : AppCompatActivity(), AddCardContract.View {
     }
 
     override fun cardExistsError() {
-        runOnUiThread({ //This is because it is called from a background thread
-            Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
-                    .show()
-        })
+
+        Toast.makeText(this, "Card already exists", Toast.LENGTH_SHORT)
+                .show()
 
     }
 
     override fun saveCardSuccess() {
-        runOnUiThread({
-            setResult(Activity.RESULT_OK)
-            finish()
-        })
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
 }
