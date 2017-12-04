@@ -1,6 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.addcard.di
 
 import com.oluwatimilehin.cryptoconverter.addcard.AddCardContract
+import com.oluwatimilehin.cryptoconverter.utils.ExtendedCurrencyWrapper
 import dagger.Module
 import dagger.Provides
 
@@ -13,4 +14,7 @@ class AddCardPresenterModule(val view: AddCardContract.View){
 
     @Provides
     fun provideView(): AddCardContract.View = view
+
+    @Provides
+    fun provideExtendedCurrencyWrapper(): ExtendedCurrencyWrapper = ExtendedCurrencyWrapper()
 }

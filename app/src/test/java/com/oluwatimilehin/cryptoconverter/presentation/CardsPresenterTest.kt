@@ -6,22 +6,14 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import com.oluwatimilehin.cryptoconverter.cards.CardsContract
 import com.oluwatimilehin.cryptoconverter.cards.CardsPresenter
-import com.oluwatimilehin.cryptoconverter.data.di.RunOn
 import com.oluwatimilehin.cryptoconverter.data.models.Card
-import com.oluwatimilehin.cryptoconverter.data.models.Currency
-import com.oluwatimilehin.cryptoconverter.data.repositories.CardsRepository
-import com.oluwatimilehin.cryptoconverter.data.repositories.CurrencyRepository
-import com.oluwatimilehin.cryptoconverter.utils.schedulers.SchedulerType
 import io.reactivex.Completable
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.MockitoAnnotations
 import java.net.SocketTimeoutException
 
 
@@ -30,45 +22,16 @@ import java.net.SocketTimeoutException
  * oluwatimilehinadeniran@gmail.com.
  */
 
-class CardsPresenterTest {
-
-    @Mock
-    lateinit var cardsRepository: CardsRepository
-
-    @Mock
-    lateinit var currencyRepository: CurrencyRepository
+class CardsPresenterTest : BasePresenterTest() {
 
     @Mock
     lateinit var view: CardsContract.View
 
-    @RunOn(SchedulerType.MAIN)
-    lateinit var mainThread: Scheduler
-
-    @RunOn(SchedulerType.IO)
-    lateinit var ioThread: Scheduler
-
-    lateinit var scheduler: TestScheduler
     lateinit var cardsPresenter: CardsPresenter
 
-    lateinit var cardOne: Card
-    lateinit var cardTwo: Card
-
-    lateinit var currencyOne: Currency
-    lateinit var currencyTwo: Currency
-
     @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
-
-        scheduler = TestScheduler()
-        mainThread = scheduler
-        ioThread = scheduler
-
-        cardOne = Card(0, "Naira", "BTC", "ETH", 2000.3, 1)
-        cardTwo = Card(0, "Naira", "BTC", "ETH", 2000.3, 1)
-
-        currencyOne = Currency(0, "BTC", "ETH", 222.34)
-        currencyTwo = Currency(0, "BTC", "ETH", 222.34)
+    override fun setUp() {
+        super.setUp()
 
         cardsPresenter = CardsPresenter(cardsRepository, currencyRepository, view, ioThread, mainThread)
     }
