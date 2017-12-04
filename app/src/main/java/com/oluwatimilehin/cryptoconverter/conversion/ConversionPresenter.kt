@@ -1,40 +1,30 @@
 package com.oluwatimilehin.cryptoconverter.conversion
 
+import com.oluwatimilehin.cryptoconverter.utils.ConversionCalculator
 import java.math.BigDecimal
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.text.NumberFormat
-import java.util.*
 import javax.inject.Inject
 
 /**
  * Created by Oluwatimilehin on 03/11/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
-class ConversionPresenter @Inject constructor(val view: ConversionContract.View) :
+class ConversionPresenter @Inject constructor(val view: ConversionContract.View,val calculator:
+ConversionCalculator) :
         ConversionContract.Presenter  {
+
     override fun setAmount(rate: Double) {
         this.rate = BigDecimal.valueOf(rate)
     }
 
     private lateinit var rate: BigDecimal
-    private val formatter = DecimalFormat("#,###,###.###")
 
-    override fun convertAmount(input: String, conversion: String) {
-        val numberFormat = NumberFormat.getNumberInstance(Locale.US)
-        var amount = BigDecimal.valueOf(numberFormat.parse(input).toDouble())
+    override fun convertAmount(input: String, conversionMode: String) {
+        val newAmount = calculator.calculateAmount(conversionMode, input, rate)
 
-        when (conversion) {
-            "from" -> {
-                amount = amount.multiply(rate)
-            }
-            "to" -> {
-                amount = amount.divide(rate, 3, RoundingMode.HALF_UP)
-            }
+        when(conversionMode){
+            "from" -> view.updateToField(newAmount)
+            "to" -> view.updateFromField(newAmount)
         }
-
-        val newAmount = formatter.format(amount)
-        view.showAmount(newAmount, conversion)
     }
 
 }

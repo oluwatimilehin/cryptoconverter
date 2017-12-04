@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
 class ConversionActivity : AppCompatActivity(), ConversionContract.View {
+
     private val disposables = CompositeDisposable()
 
     @Inject
@@ -51,7 +52,7 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
                 .subscribe(
                         {  s: CharSequence ->
                             if( s.isNotEmpty()) presenter.convertAmount(s.toString(), "to")
-                            else  toField.setText("")
+                            else  fromField.setText("")
                         },
                         {
                             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
@@ -70,14 +71,11 @@ class ConversionActivity : AppCompatActivity(), ConversionContract.View {
         disposables.clear()
     }
 
-    override fun showAmount(amount: String, conversion: String) {
-        when (conversion) {
-            "from" -> {
-                toField.setText(amount)
-            }
-            "to" -> {
-                fromField.setText(amount)
-            }
-        }
+    override fun updateFromField(amount: String) {
+        fromField.setText(amount)
+    }
+
+    override fun updateToField(amount: String) {
+        toField.setText(amount)
     }
 }

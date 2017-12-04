@@ -7,12 +7,13 @@ package com.oluwatimilehin.cryptoconverter.conversion
 interface ConversionContract{
 
     interface View{
-        fun showAmount(amount: String, conversion: String)
+        fun updateFromField(amount: String)
+        fun updateToField(amount: String)
     }
 
     interface Presenter{
         fun setAmount(rate: Double)
-        fun convertAmount(input: String, conversion: String)
+        fun convertAmount(input: String, conversionMode: String)
     }
 
 }
