@@ -1,6 +1,7 @@
 package com.oluwatimilehin.cryptoconverter.utils
 
 import com.mynameismidori.currencypicker.ExtendedCurrency
+import javax.inject.Inject
 
 /**
  * t
@@ -12,7 +13,8 @@ import com.mynameismidori.currencypicker.ExtendedCurrency
 /**
  * Wrapper to make it easier for testing
  */
-class ExtendedCurrencyWrapper{
+class ExtendedCurrencyWrapper @Inject constructor(){
+
     fun getCurrencyByName(to: String): ExtendedCurrency{
         return ExtendedCurrency.getCurrencyByName(to)
     }
