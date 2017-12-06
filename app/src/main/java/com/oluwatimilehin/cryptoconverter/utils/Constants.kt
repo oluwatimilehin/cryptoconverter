@@ -7,6 +7,10 @@ import com.mynameismidori.currencypicker.ExtendedCurrency
  * Created by Oluwatimilehin on 19/10/2017.
  * oluwatimilehinadeniran@gmail.com.
  */
+
+/**
+ * All the app constants used in various classes
+ */
 class Constants{
 
     companion object {
@@ -18,7 +22,8 @@ class Constants{
         val KEY_TO = "to"
         val KEY_AMOUNT = "amount"
 
-        val listOfCurrencies: List<String> = listOf("EUR",
+        //Currencies used in API call.
+        private val listOfCurrencies: List<String> = listOf("EUR",
                 "USD",
                 "GBP",
                 "CZK",
@@ -43,6 +48,8 @@ class Constants{
 
         val currenciesString: String = TextUtils.join(",", listOfCurrencies)
 
+        //The list of names for the Spinner when adding a card. Gotten from the extended currency
+        // library
         fun getCurrenciesNames(): List<String>{
             val currencyNames: MutableList<String> = ArrayList<String>()
 

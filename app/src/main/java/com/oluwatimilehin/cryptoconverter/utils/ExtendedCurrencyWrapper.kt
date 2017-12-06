@@ -11,7 +11,7 @@ import javax.inject.Inject
  */
 
 /**
- * Wrapper to make it easier for testing
+ * Wrapper to make it easier to mock ExtendedCurrency class
  */
 class ExtendedCurrencyWrapper @Inject constructor(){
 
