@@ -8,11 +8,6 @@ Data is gotten from the Cryptocompare API.
 A user can create a card to convert from cryptocurrency to another currency anytime after the conversion rates have been saved
 to the database the first time. Each time the exchange rates are updated, the cards that a user has created get updated with the new data.  Clicking on a card takes the user to a screen where he/she can enter an amount to perform conversion between currencies.
 
-      ![Cards list](/screenshots/home.png)
-      ![Add card](/screenshots/add_card.png)
-      ![Conversion screen](/screenshots/convert.png)
-      ![Empty cards list](/screenshots/home_empty.png)
-    
  ## Libraries
  * [Currency Picker](https://github.com/midorikocak/currency-picker-android) - For loading currencies data
  * Retrofit - for Networking
@@ -36,6 +31,13 @@ to the database the first time. Each time the exchange rates are updated, the ca
   
  ## Testing
  This projects has local unit tests powered by JUnit and mockito for mocking objects.
+
+## Screenshots
+  ![Cards list](/screenshots/home.png)
+  ![Add card](/screenshots/add_card.png)
+  ![Conversion screen](/screenshots/convert.png)
+  ![Empty cards list](/screenshots/home_empty.png)
+    
 
 
 
