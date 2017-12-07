@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import java.math.BigDecimal
 
 /**
  * Created by Oluwatimilehin on 04/12/2017.
@@ -35,7 +36,8 @@ class ConversionPresenterTest{
     @Test
     fun typingAnInput_shouldUpdateTheRightField(){
         //Given
-        whenever(calculator.calculateAmount(any(), any(), any())).thenReturn("11112223")
+        whenever(calculator.calculateAmount(any(), any(), any())).thenReturn(BigDecimal.valueOf
+        (1222202.233))
 
         //When conversion mode is "from"
         presenter.setAmount(2333.8)
