@@ -33,13 +33,15 @@ class CardsRepositoryTest{
     fun getAllCards_shouldTriggerError_whenEmpty(){
         val list = emptyList<Card>()
 
+        //given
         whenever(localCardsDataManager.getCards()).thenReturn(Single.just(list))
 
+        //when
         val testObserver = TestObserver.create<List<Card>>()
-
         cardsRepository.getAllCards()
                 .subscribe(testObserver)
 
+        //then
         testObserver.assertError(NoSuchElementException::class.java)
 
     }

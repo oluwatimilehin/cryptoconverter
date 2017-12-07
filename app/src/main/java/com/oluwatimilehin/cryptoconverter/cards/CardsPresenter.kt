@@ -35,8 +35,8 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
         disposables.add(Completable.fromAction { cardsRepository.deleteAll() }
                 .subscribeOn(ioScheduler)
                 .observeOn(mainThread)
-                .doOnComplete({loadCards()})
-                .doOnError({it.printStackTrace()})
+                .doOnComplete({ loadCards() })
+                .doOnError({ it.printStackTrace() })
                 .subscribe()
         )
     }
@@ -53,7 +53,7 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
         disposables.add(Completable.fromAction { cardsRepository.deleteCard(card) }
                 .subscribeOn(ioScheduler)
                 .observeOn(mainThread)
-                .doOnComplete({loadCards()})
+                .doOnComplete({ loadCards() })
                 .subscribe({
                     view.showCardDeleted()
                 }))
@@ -74,7 +74,7 @@ CurrencyRepository, val view: CardsContract.View, @RunOn(SchedulerType.IO) val i
                 }, { card: Card, value: Double ->
                     Pair(card, value)
                 })
-                .map{ cardsRepository.updateCard(it.first, it.second) }
+                .map { cardsRepository.updateCard(it.first, it.second) }
                 .toList()
                 .flatMap { cardsRepository.getAllCards() }
                 .observeOn(mainThread)
