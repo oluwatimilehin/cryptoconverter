@@ -2,6 +2,7 @@ package com.oluwatimilehin.cryptoconverter.conversion
 
 import com.oluwatimilehin.cryptoconverter.utils.ConversionCalculator
 import java.math.BigDecimal
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 /**
@@ -19,7 +20,9 @@ ConversionCalculator) :
     private lateinit var rate: BigDecimal
 
     override fun convertAmount(input: String, conversionMode: String) {
-        val newAmount = calculator.calculateAmount(conversionMode, input, rate)
+
+        val formatter = DecimalFormat("#,###,###.###")
+        val newAmount = formatter.format(calculator.calculateAmount(conversionMode, input, rate))
 
         when(conversionMode){
             "from" -> view.updateToField(newAmount)
