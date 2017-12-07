@@ -31,11 +31,11 @@ to the database the first time. Each time the exchange rates are updated, the ca
     * [AV Loading Indicator](https://github.com/81813780/AVLoadingIndicatorView)
     * [Material Values](https://github.com/AoDevBlue/MaterialValues)
  * Unit Testing:
-  * [JUnit4](https://github.com/junit-team/junit4)
-  * [Mockito](https://github.com/mockito/mockito)
+    * [JUnit4](https://github.com/junit-team/junit4)
+    * [Mockito](https://github.com/mockito/mockito)
  * Developer Debugging Tools:
-  * [Stetho](https://github.com/facebook/stetho)
-  * [LeakCanary](https://github.com/square/leakcanary)
+    * [Stetho](https://github.com/facebook/stetho)
+    * [LeakCanary](https://github.com/square/leakcanary)
   
  ## Testing
  This projects has local unit tests powered by JUnit and mockito for mocking objects.
