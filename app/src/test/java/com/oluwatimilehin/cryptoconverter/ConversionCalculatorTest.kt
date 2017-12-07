@@ -16,9 +16,11 @@ class ConversionCalculatorTest{
     fun calculate(){
         val calculator = ConversionCalculator()
 
+        //Test that when the conversion mode is "from", it multiplies the values
         assertEquals(BigInteger.valueOf(400), calculator.calculateAmount("from", "20",
                 BigDecimal.valueOf(20.00)).toBigInteger())
 
+        //Test that when the conversion mode is "to", it divides the values.
         assertEquals(BigInteger.valueOf(20), calculator.calculateAmount("to", "400",
                 BigDecimal.valueOf(20.00)).toBigInteger())
 
