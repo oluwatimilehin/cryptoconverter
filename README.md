@@ -9,10 +9,10 @@ A user can create a card to convert from cryptocurrency to another currency anyt
 to the database the first time. Each time the exchange rates are updated, the cards that a user has created get updated with the new data.  Clicking on a card takes the user to a screen where he/she can enter an amount to perform conversion between currencies.
 
 <p align="center">
-  <img src="/screenshots/home.png" height="500" width="300">
-  <img src="/screenshots/add_card.png" height="500" width="300" >
-  <img src="/screenshots/convert.png" height="500" width="300">
-  <img src="/screenshots/home_empty.png" height="500" width="300">
+  <img src="/screenshots/home.png" height="600" width="360">
+  <img src="/screenshots/add_card.png" height="600" width="360" >
+  <img src="/screenshots/convert.png" height="600" width="360">
+  <img src="/screenshots/home_empty.png" height="600" width="360">
 </p>
   
   
